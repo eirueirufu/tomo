@@ -9,7 +9,7 @@ import { PaperPlaneTilt } from "@phosphor-icons/react";
 export default function Home() {
   const [text, setText] = useState("");
   const [msgs, setMsgs] = useState<Array<JSX.Element>>([
-    <MsgAssistant key={0} />,
+    <MsgAssistant key={0} msg="メッセージをインプットください" />,
   ]);
 
   return (
