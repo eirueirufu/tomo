@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="container h-screen m-auto flex flex-col items-center justify-center">
-      <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
+      <div className="w-full flex-1 flex flex-col gap-2 overflow-y-auto">
         {messages.map((message) => {
           switch (message.role) {
             case "assistant":
