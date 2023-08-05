@@ -5,12 +5,14 @@ import MsgAssistant from "@/components/msg-assistant";
 import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { useChat } from "ai/react";
+import vhCheck from "vh-check";
 
 export default function Home() {
+  vhCheck();
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
-    <div className="container h-screen m-auto flex flex-col items-center justify-center">
+    <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
       <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
         {[...messages].reverse().map((message) => {
           switch (message.role) {
