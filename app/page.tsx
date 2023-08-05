@@ -6,15 +6,13 @@ import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { useChat } from "ai/react";
 
-import { signIn, signOut, useSession } from "next-auth/react";
-
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
     <div className="container h-screen m-auto flex flex-col items-center justify-center">
       <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
-        {messages.reverse().map((message) => {
+        {[...messages].reverse().map((message) => {
           switch (message.role) {
             case "assistant":
               return <MsgAssistant key={message.id} msg={message.content} />;
