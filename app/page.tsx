@@ -6,9 +6,13 @@ import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { useChat } from "ai/react";
 import vhCheck from "vh-check";
+import { useEffect } from "react";
 
 export default function Home() {
-  vhCheck();
+  useEffect(() => {
+    vhCheck();
+  }, []);
+  
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
   return (
