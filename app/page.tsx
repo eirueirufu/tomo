@@ -6,6 +6,8 @@ import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { useChat } from "ai/react";
 
+import { signIn, signOut, useSession } from "next-auth/react";
+
 export default function Home() {
   const { messages, input, handleInputChange, handleSubmit } = useChat();
 
@@ -25,12 +27,10 @@ export default function Home() {
       </div>
 
       <form
-        id="textarea"
         onSubmit={handleSubmit}
         className="w-full flex items-center justify-between gap-3 p-1"
       >
         <Textarea
-          form="textarea"
           placeholder="メッセージをインプットください"
           minRows={1}
           maxRows={3}
@@ -38,7 +38,6 @@ export default function Home() {
           onChange={handleInputChange}
         />
         <Button
-          form="textarea"
           type="submit"
           radius="full"
           className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
