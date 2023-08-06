@@ -58,7 +58,7 @@ export default function Home() {
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
-                  router.push(`/chat/${assistant.id}`);
+                  router.push(`/assistant-setting/${assistant.id}`);
                 }}
               />
             </CardBody>

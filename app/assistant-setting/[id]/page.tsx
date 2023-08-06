@@ -14,7 +14,7 @@ import {
 } from "@nextui-org/react";
 import { PaperPlaneTilt, UploadSimple } from "@phosphor-icons/react";
 
-export default function Page() {
+export default function Page({ params }: { params: { id: string } }) {
   return (
     <Card className="w-full h-full">
       <CardHeader className="flex gap-3 flex-col sm:flex-row">
