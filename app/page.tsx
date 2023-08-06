@@ -20,8 +20,8 @@ export default function Home() {
 
   return (
     <div className="w-full h-full flex flex-col gap-1 items-center p-3">
-      <Card isHoverable isPressable className="w-full">
-        <Link href="/chat">
+      <Link href="/chat" className="w-full">
+        <Card isHoverable isPressable className="w-full">
           <CardBody className="flex flex-row p-2">
             <User
               name="伊知地虹夏"
@@ -31,11 +31,11 @@ export default function Home() {
               }}
             />
           </CardBody>
-        </Link>
-      </Card>
+        </Card>
+      </Link>
 
-      <Card isHoverable isPressable className="w-full">
-        <Link href="/chat">
+      <Link href="/chat" className="w-full">
+        <Card isHoverable isPressable className="w-full">
           <CardBody className="flex flex-row p-2">
             <User
               name="伊知地虹夏"
@@ -45,8 +45,8 @@ export default function Home() {
               }}
             />
           </CardBody>
-        </Link>
-      </Card>
+        </Card>
+      </Link>
     </div>
   );
 }
