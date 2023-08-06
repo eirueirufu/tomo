@@ -16,7 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto">
+            {children}
+          </div>
+        </Providers>
         <Analytics />
       </body>
     </html>

@@ -1,67 +1,52 @@
 "use client";
 
-import { Textarea, Button, Spinner } from "@nextui-org/react";
-import MsgAssistant from "@/components/msg-assistant";
-import MsgUser from "@/components/msg-user";
-import { PaperPlaneTilt } from "@phosphor-icons/react";
-import { useChat } from "ai/react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Avatar,
+  Button,
+  User,
+} from "@nextui-org/react";
 import vhCheck from "vh-check";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
   useEffect(() => {
     vhCheck();
   }, []);
 
-  const { messages, input, handleInputChange, handleSubmit, stop, isLoading } =
-    useChat();
-
   return (
-    <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
-      <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
-        {[...messages].reverse().map((message) => {
-          switch (message.role) {
-            case "assistant":
-              return <MsgAssistant key={message.id} msg={message.content} />;
-            case "user":
-              return <MsgUser key={message.id} msg={message.content} />;
-            default:
-              break;
-          }
-        })}
-      </div>
+    <div className="w-full h-full flex flex-col gap-1 items-center p-3">
+      <Card isHoverable isPressable className="w-full">
+        <Link href="/chat">
+          <CardBody className="flex flex-row p-2">
+            <User
+              name="伊知地虹夏"
+              description="下北沢の大天使"
+              avatarProps={{
+                src: "/user.jpeg",
+              }}
+            />
+          </CardBody>
+        </Link>
+      </Card>
 
-      <form
-        onSubmit={handleSubmit}
-        className="w-full flex items-center justify-between gap-3 p-1"
-      >
-        <Textarea
-          placeholder="メッセージをインプットください"
-          minRows={1}
-          maxRows={3}
-          value={input}
-          onChange={handleInputChange}
-        />
-
-        {isLoading ? (
-          <Button
-            type="button"
-            radius="full"
-            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-            onClick={stop}
-          >
-            <Spinner />
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            radius="full"
-            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-          >
-            <PaperPlaneTilt size={32} weight="bold" />
-          </Button>
-        )}
-      </form>
+      <Card isHoverable isPressable className="w-full">
+        <Link href="/chat">
+          <CardBody className="flex flex-row p-2">
+            <User
+              name="伊知地虹夏"
+              description="下北沢の大天使"
+              avatarProps={{
+                src: "/user.jpeg",
+              }}
+            />
+          </CardBody>
+        </Link>
+      </Card>
     </div>
   );
 }
