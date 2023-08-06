@@ -37,14 +37,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col gap-3 items-center p-3">
+    <div className="w-full h-full flex flex-col gap-2 items-center p-3">
       {assistants.map((assistant) => {
         return (
           <Card
             key={assistant.id}
             isHoverable
             isPressable
-            className="w-full"
+            className="w-full p-3"
             onClick={() => {
               router.push(`/chat/${assistant.id}`);
             }}
