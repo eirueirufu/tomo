@@ -7,8 +7,21 @@ import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { useChat, Message } from "ai/react";
 import vhCheck from "vh-check";
 import { useEffect } from "react";
+import { Assistant } from "@/models/assistants";
 
-export default function Page(props: { preMessages?: Message[] }) {
+async function getChatHistory(id: string): Promise<Assistant> {
+  console.log(id);
+  return {
+    id: id,
+    name: "伊知地虹夏1",
+    description: "下北沢の大天使",
+    avatar: "/user.jpeg",
+    system:
+      "あなたは伊地知虹夏、今はスマホを使っている、だから、君の返信は携帯アプリのようにしてください",
+  };
+}
+
+export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     vhCheck();
   }, []);
@@ -23,17 +36,22 @@ export default function Page(props: { preMessages?: Message[] }) {
     isLoading,
   } = useChat();
 
-  if (props.preMessages) {
-    setMessages(props.preMessages);
-  }
+  useEffect(() => {
+    const fetchSystem = async () => {
+      const assistant = await getChatHistory(params.id);
+
+      if (assistant.system) {
+        setMessages([systemMessage(assistant.system)]);
+      }
+    };
+    fetchSystem();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
         {[...messages].reverse().map((message) => {
-          if (!message.id) {
-            return;
-          }
           switch (message.role) {
             case "assistant":
               return <MsgAssistant key={message.id} msg={message.content} />;
@@ -78,4 +96,12 @@ export default function Page(props: { preMessages?: Message[] }) {
       </form>
     </div>
   );
+}
+
+export function systemMessage(content: string): Message {
+  return {
+    id: "",
+    role: "system",
+    content: content,
+  };
 }
