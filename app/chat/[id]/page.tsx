@@ -98,7 +98,7 @@ export default function Page({ params }: { params: { id: string } }) {
   );
 }
 
-export function systemMessage(content: string): Message {
+function systemMessage(content: string): Message {
   return {
     id: "",
     role: "system",
