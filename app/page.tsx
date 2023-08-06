@@ -37,7 +37,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col gap-1 items-center p-3">
+    <div className="w-full h-full flex flex-col gap-3 items-center p-3">
       {assistants.map((assistant) => {
         return (
           <Card
@@ -49,19 +49,17 @@ export default function Home() {
               router.push(`/chat/${assistant.id}`);
             }}
           >
-            <CardBody className="flex flex-row p-2">
-              <User
-                name={assistant.name}
-                description={assistant.description}
-                avatarProps={{
-                  src: assistant.avatar,
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  router.push(`/assistant-setting/${assistant.id}`);
-                }}
-              />
-            </CardBody>
+            <User
+              name={assistant.name}
+              description={assistant.description}
+              avatarProps={{
+                src: assistant.avatar,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(`/assistant-setting/${assistant.id}`);
+              }}
+            />
           </Card>
         );
       })}
