@@ -1,6 +1,6 @@
 "use client";
 
-import { Textarea, Button } from "@nextui-org/react";
+import { Textarea, Button, Spinner } from "@nextui-org/react";
 import MsgAssistant from "@/components/msg-assistant";
 import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
@@ -12,8 +12,9 @@ export default function Home() {
   useEffect(() => {
     vhCheck();
   }, []);
-  
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+
+  const { messages, input, handleInputChange, handleSubmit, stop, isLoading } =
+    useChat();
 
   return (
     <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
@@ -41,13 +42,25 @@ export default function Home() {
           value={input}
           onChange={handleInputChange}
         />
-        <Button
-          type="submit"
-          radius="full"
-          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-        >
-          <PaperPlaneTilt size={32} weight="bold" />
-        </Button>
+
+        {isLoading ? (
+          <Button
+            type="button"
+            radius="full"
+            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+            onClick={stop}
+          >
+            <Spinner />
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            radius="full"
+            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          >
+            <PaperPlaneTilt size={32} weight="bold" />
+          </Button>
+        )}
       </form>
     </div>
   );
