@@ -41,13 +41,13 @@ export default function Page({ params }: { params: { id: string } }) {
         <Input
           size="sm"
           type="text"
-          label="Name"
+          placeholder="Name"
           defaultValue={assistant?.name}
         />
         <Input
           size="sm"
           type="text"
-          label="Description"
+          placeholder="Description"
           defaultValue={assistant?.description}
         />
       </CardHeader>
