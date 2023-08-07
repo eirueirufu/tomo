@@ -64,6 +64,7 @@ export default function Page({ params }: { params: { id: string } }) {
       </div>
 
       <form
+        id="chatArea"
         onSubmit={handleSubmit}
         className="w-full flex items-center justify-between gap-3 p-1"
       >
@@ -89,6 +90,10 @@ export default function Page({ params }: { params: { id: string } }) {
             type="submit"
             radius="full"
             className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+            onClick={() => {
+              const e = document.getElementById("chatArea") as HTMLFormElement;
+              e.submit();
+            }}
           >
             <PaperPlaneTilt size={32} weight="bold" />
           </Button>
