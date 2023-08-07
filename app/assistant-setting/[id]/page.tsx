@@ -13,24 +13,42 @@ import {
   Button,
 } from "@nextui-org/react";
 import { PaperPlaneTilt, UploadSimple } from "@phosphor-icons/react";
+import { useState, useEffect } from "react";
+import { WithId } from "mongodb";
+import { Assistant } from "@/models/assistants";
 
 export default function Page({ params }: { params: { id: string } }) {
+  const [assistant, setAssistant] = useState<WithId<Assistant>>();
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(`/api/assistants/${params.id}`);
+      const assistant: WithId<Assistant> = await response.json();
+      setAssistant(assistant);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <Card className="w-full h-full">
       <CardHeader className="flex gap-3 flex-col sm:flex-row">
         <Image
           alt="nextui logo"
           radius="sm"
-          src="/user.jpeg"
+          src={assistant?.avatar}
           width={48}
           height={48}
         />
-        <Input size="sm" type="text" label="Name" defaultValue="伊知地虹夏" />
+        <Input
+          size="sm"
+          type="text"
+          label="Name"
+          defaultValue={assistant?.name}
+        />
         <Input
           size="sm"
           type="text"
           label="Description"
-          defaultValue="下北沢の大天使"
+          defaultValue={assistant?.description}
         />
       </CardHeader>
       <Divider />
@@ -39,7 +57,7 @@ export default function Page({ params }: { params: { id: string } }) {
           placeholder="メッセージをインプットください"
           minRows={10}
           maxRows={99}
-          defaultValue="バンドのメンバーです！"
+          defaultValue={assistant?.system}
         />
       </CardBody>
       <Divider />

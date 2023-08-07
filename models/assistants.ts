@@ -1,5 +1,6 @@
+import { ObjectId } from "mongodb";
+
 export interface Assistant {
-  id: string;
   name?: string;
   description?: string;
   avatar?: string;

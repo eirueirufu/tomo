@@ -4,28 +4,16 @@ import { Textarea, Button, Spinner } from "@nextui-org/react";
 import MsgAssistant from "@/components/msg-assistant";
 import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
-import { useChat, Message } from "ai/react";
+import { useChat } from "ai/react";
 import vhCheck from "vh-check";
-import { useEffect } from "react";
 import { Assistant } from "@/models/assistants";
-
-async function getChatHistory(id: string): Promise<Assistant> {
-  console.log(id);
-  return {
-    id: id,
-    name: "伊知地虹夏1",
-    description: "下北沢の大天使",
-    avatar: "/user.jpeg",
-    system:
-      "あなたは伊地知虹夏、今はスマホを使っている、だから、君の返信は携帯アプリのようにしてください",
-  };
-}
+import { Message } from "@/models/messages";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { WithId } from "mongodb";
 
 export default function Page({ params }: { params: { id: string } }) {
-  useEffect(() => {
-    vhCheck();
-  }, []);
-
   const {
     messages,
     setMessages,
@@ -36,15 +24,15 @@ export default function Page({ params }: { params: { id: string } }) {
     isLoading,
   } = useChat();
 
+  const [assistant, setAssistant] = useState<WithId<Assistant>>();
   useEffect(() => {
-    const fetchSystem = async () => {
-      const assistant = await getChatHistory(params.id);
-
-      if (assistant.system) {
-        setMessages([systemMessage(assistant.system)]);
-      }
-    };
-    fetchSystem();
+    (async () => {
+      let response = await fetch(`/api/assistants/${params.id}`);
+      const assistant: WithId<Assistant> = await response.json();
+      response = await fetch(`/api/assistants/${params.id}/messages`);
+      const messages: WithId<Message>[] = await response.json();
+      setMessages(messages);
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -101,12 +89,4 @@ export default function Page({ params }: { params: { id: string } }) {
       </form>
     </div>
   );
-}
-
-function systemMessage(content: string): Message {
-  return {
-    id: "",
-    role: "system",
-    content: content,
-  };
 }
