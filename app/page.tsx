@@ -25,7 +25,7 @@ export default function Home() {
   const [assistants, setAssistants] = useState<WithId<Assistant>[]>([]);
   useEffect(() => {
     (async () => {
-      const response = await fetch("/api/assistants");
+      const response = await fetch("/api/assistants", { cache: "no-cache" });
       const assistants: WithId<Assistant>[] = await response.json();
       setAssistants(assistants);
     })();
