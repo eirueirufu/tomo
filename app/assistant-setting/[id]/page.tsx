@@ -44,12 +44,24 @@ export default function Page({ params }: { params: { id: string } }) {
           type="text"
           placeholder="Name"
           defaultValue={assistant?.name}
+          onChange={(e) => {
+            if (assistant) {
+              assistant.name = e.target.value;
+              setAssistant(assistant);
+            }
+          }}
         />
         <Input
           size="sm"
           type="text"
           placeholder="Description"
           defaultValue={assistant?.description}
+          onChange={(e) => {
+            if (assistant) {
+              assistant.description = e.target.value;
+              setAssistant(assistant);
+            }
+          }}
         />
       </CardHeader>
       <Divider />
@@ -59,6 +71,12 @@ export default function Page({ params }: { params: { id: string } }) {
           minRows={10}
           maxRows={99}
           defaultValue={assistant?.system}
+          onChange={(e) => {
+            if (assistant) {
+              assistant.system = e.target.value;
+              setAssistant(assistant);
+            }
+          }}
         />
       </CardBody>
       <Divider />
@@ -76,7 +94,7 @@ export default function Page({ params }: { params: { id: string } }) {
               if (!assistant) {
                 return;
               }
-              await fetch(`/assistant-setting/${assistant._id.toString()}`, {
+              await fetch(`/api/assistants/${assistant._id.toString()}`, {
                 method: "PUT",
                 body: JSON.stringify(assistant),
               });

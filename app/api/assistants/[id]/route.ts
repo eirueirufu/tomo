@@ -20,6 +20,16 @@ export async function PUT(
   const client = await clientPromise;
   const collection = client.db("gpt").collection<Assistant>("assistants");
   const assistant: Assistant = await request.json();
-  await collection.updateOne({ _id: new ObjectId(params.id) }, assistant);
+  await collection.updateOne(
+    { _id: new ObjectId(params.id) },
+    {
+      $set: {
+        name: assistant.name,
+        description: assistant.description,
+        avatar: assistant.avatar,
+        system: assistant.system,
+      },
+    },
+  );
   return new NextResponse(null, { status: 204 });
 }
