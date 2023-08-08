@@ -9,7 +9,7 @@ import {
   Button,
   User,
 } from "@nextui-org/react";
-import vhCheck from "vh-check";
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -17,10 +17,6 @@ import { Assistant } from "@/models/assistants";
 import { WithId } from "mongodb";
 
 export default function Home() {
-  useEffect(() => {
-    vhCheck();
-  }, []);
-
   const router = useRouter();
   const [assistants, setAssistants] = useState<WithId<Assistant>[]>([]);
   useEffect(() => {
