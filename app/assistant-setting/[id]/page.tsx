@@ -12,10 +12,11 @@ import {
   Textarea,
   Button,
 } from "@nextui-org/react";
-import { PaperPlaneTilt, UploadSimple } from "@phosphor-icons/react";
+import { PaperPlaneTilt, File } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import { WithId } from "mongodb";
 import { Assistant } from "@/models/assistants";
+import { json } from "stream/consumers";
 
 export default function Page({ params }: { params: { id: string } }) {
   const [assistant, setAssistant] = useState<WithId<Assistant>>();
@@ -68,7 +69,19 @@ export default function Page({ params }: { params: { id: string } }) {
           radius="full"
           className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
         >
-          <UploadSimple size={24} weight="bold" />
+          <File
+            size={24}
+            weight="bold"
+            onClick={async () => {
+              if (!assistant) {
+                return;
+              }
+              await fetch(`/assistant-setting/${assistant._id.toString()}`, {
+                method: "POST",
+                body: JSON.stringify(assistant),
+              });
+            }}
+          />
         </Button>
       </CardFooter>
     </Card>
