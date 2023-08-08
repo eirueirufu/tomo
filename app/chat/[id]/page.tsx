@@ -23,10 +23,9 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     (async () => {
+      const messages: AiMessage[] = [];
       let response = await fetch(`/api/assistants/${params.id}`);
       const assistant: WithId<Assistant> = await response.json();
-      response = await fetch(`/api/assistants/${params.id}/messages`);
-      const messages: AiMessage[] = [];
       if (assistant.system) {
         messages.push({
           id: "",
@@ -34,7 +33,11 @@ export default function Page({ params }: { params: { id: string } }) {
           content: assistant.system ?? "",
         });
       }
-      messages.push(await response.json());
+      response = await fetch(`/api/assistants/${params.id}/messages`);
+      const msgs: AiMessage[] = await response.json();
+      if (msgs.length > 0) {
+        messages.push(...msgs);
+      }
       setMessages(messages);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
