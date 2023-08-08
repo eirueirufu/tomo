@@ -21,11 +21,16 @@ export default function Page({ params }: { params: { id: string } }) {
     isLoading,
   } = useChat();
 
+  const [avatar, setAvatar] = useState("/user.jpeg");
+
   useEffect(() => {
     (async () => {
       const messages: AiMessage[] = [];
       let response = await fetch(`/api/assistants/${params.id}`);
       const assistant: WithId<Assistant> = await response.json();
+      if (assistant.avatar) {
+        setAvatar(assistant.avatar);
+      }
       if (assistant.system) {
         messages.push({
           id: "",
@@ -49,7 +54,13 @@ export default function Page({ params }: { params: { id: string } }) {
         {[...messages].reverse().map((message) => {
           switch (message.role) {
             case "assistant":
-              return <MsgAssistant key={message.id} msg={message.content} />;
+              return (
+                <MsgAssistant
+                  key={message.id}
+                  msg={message.content}
+                  avatar={avatar}
+                />
+              );
             case "user":
               return <MsgUser key={message.id} msg={message.content} />;
             default:
