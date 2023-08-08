@@ -77,7 +77,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 return;
               }
               await fetch(`/assistant-setting/${assistant._id.toString()}`, {
-                method: "POST",
+                method: "PUT",
                 body: JSON.stringify(assistant),
               });
             }}
