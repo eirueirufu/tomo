@@ -4,7 +4,7 @@ import { Textarea, Button, Spinner } from "@nextui-org/react";
 import MsgAssistant from "@/components/msg-assistant";
 import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt } from "@phosphor-icons/react";
-import { useChat } from "ai/react";
+import { useChat, Message as AiMessage } from "ai/react";
 import { Assistant } from "@/models/assistants";
 import { Message } from "@/models/messages";
 import { useEffect, useState } from "react";
@@ -23,8 +23,18 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(`/api/assistants/${params.id}/messages`);
-      const messages: WithId<Message>[] = await response.json();
+      let response = await fetch(`/api/assistants/${params.id}`);
+      const assistant: WithId<Assistant> = await response.json();
+      response = await fetch(`/api/assistants/${params.id}/messages`);
+      const messages: AiMessage[] = [];
+      if (assistant.system) {
+        messages.push({
+          id: "",
+          role: "system",
+          content: assistant.system ?? "",
+        });
+      }
+      messages.push(await response.json());
       setMessages(messages);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
