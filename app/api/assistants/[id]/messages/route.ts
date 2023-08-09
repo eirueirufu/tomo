@@ -10,7 +10,9 @@ export async function GET(
 ) {
   const client = await clientPromise;
   const collection = client.db("gpt").collection<WithId<Message>>("messages");
-  const cursor = collection.find({ assistantId: new ObjectId(params.id) });
+  const cursor = collection
+    .find({ assistantId: new ObjectId(params.id) })
+    .sort({ createdAt: 1 });
   return NextResponse.json(await cursor.toArray());
 }
 
