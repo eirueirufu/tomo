@@ -57,6 +57,24 @@ export default function Page({ params }: { params: { id: string } }) {
       initialMessages: initMessages,
     });
 
+  useEffect(() => {
+    if (
+      messages.length === 0 ||
+      isLoading ||
+      messages[messages.length - 1].role !== "user"
+    ) {
+      return;
+    }
+    fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
+      method: "POST",
+      body: JSON.stringify({
+        ...messages[messages.length - 1],
+        assistantId: assistant?._id,
+      }),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading]);
+
   return (
     <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
       <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
@@ -105,17 +123,6 @@ export default function Page({ params }: { params: { id: string } }) {
             type="submit"
             radius="full"
             className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-            onClick={() => {
-              if (messages.length >= 2) {
-                fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
-                  method: "POST",
-                  body: JSON.stringify({
-                    ...messages[messages.length - 2],
-                    assistantId: assistant?._id,
-                  }),
-                });
-              }
-            }}
           >
             <PaperPlaneTilt size={32} weight="bold" />
           </Button>
