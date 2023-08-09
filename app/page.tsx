@@ -13,10 +13,15 @@ import {
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import vhCheck from "vh-check";
 import { Assistant } from "@/models/assistants";
 import { WithId } from "mongodb";
 
 export default function Home() {
+  useEffect(() => {
+    vhCheck();
+  }, []);
+
   const router = useRouter();
   const [assistants, setAssistants] = useState<WithId<Assistant>[]>([]);
   useEffect(() => {
@@ -28,7 +33,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col gap-2 items-center p-3">
+    <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col gap-2 items-center p-3">
       {assistants.map((assistant) => {
         return (
           <Card

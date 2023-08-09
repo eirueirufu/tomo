@@ -14,11 +14,15 @@ import {
 } from "@nextui-org/react";
 import { PaperPlaneTilt, File } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
+import vhCheck from "vh-check";
 import { WithId } from "mongodb";
 import { Assistant } from "@/models/assistants";
-import { json } from "stream/consumers";
 
 export default function Page({ params }: { params: { id: string } }) {
+  useEffect(() => {
+    vhCheck();
+  }, []);
+
   const [assistant, setAssistant] = useState<WithId<Assistant>>();
   useEffect(() => {
     (async () => {
@@ -30,7 +34,7 @@ export default function Page({ params }: { params: { id: string } }) {
   }, []);
 
   return (
-    <Card className="w-full h-full">
+    <Card className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto">
       <CardHeader className="flex gap-3 flex-col sm:flex-row">
         <Image
           alt="nextui logo"

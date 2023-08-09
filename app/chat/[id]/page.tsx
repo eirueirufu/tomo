@@ -7,10 +7,15 @@ import { PaperPlaneTilt } from "@phosphor-icons/react";
 import { useChat, Message as AiMessage } from "ai/react";
 import { Assistant } from "@/models/assistants";
 import { Message } from "@/models/messages";
+import vhCheck from "vh-check";
 import { useEffect, useState } from "react";
 import { WithId } from "mongodb";
 
 export default function Page({ params }: { params: { id: string } }) {
+  useEffect(() => {
+    vhCheck();
+  }, []);
+
   const {
     messages,
     setMessages,
@@ -49,7 +54,7 @@ export default function Page({ params }: { params: { id: string } }) {
   }, []);
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
+    <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
       <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
         {[...messages].reverse().map((message) => {
           switch (message.role) {
