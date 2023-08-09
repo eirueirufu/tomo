@@ -59,16 +59,16 @@ export default function Page({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     if (
-      messages.length === 0 ||
+      messages.length < 2 ||
       isLoading ||
-      messages[messages.length - 1].role !== "user"
+      messages[messages.length - 2].role !== "user"
     ) {
       return;
     }
     fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
       method: "POST",
       body: JSON.stringify({
-        ...messages[messages.length - 1],
+        ...messages[messages.length - 2],
         assistantId: assistant?._id,
       }),
     });
