@@ -53,11 +53,11 @@ export default function Page({ params }: { params: { id: string } }) {
             assistantId: assistant?._id,
           }),
         });
-        if (messages.length > 2) {
+        if (messages.length >= 2) {
           fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
             method: "POST",
             body: JSON.stringify({
-              ...messages[messages.length - 1],
+              ...messages[messages.length - 2],
               assistantId: assistant?._id,
             }),
           });
