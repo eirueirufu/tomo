@@ -44,7 +44,7 @@ export default function Page({ params }: { params: { id: string } }) {
         });
       }
       response = await fetch(`/api/assistants/${params.id}/messages`);
-      const msgs: AiMessage[] = await response.json();
+      const msgs: WithId<Message>[] = await response.json();
       if (msgs.length > 0) {
         messages.push(...msgs);
       }
