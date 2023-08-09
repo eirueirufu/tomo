@@ -8,37 +8,34 @@ import { useChat, Message as AiMessage } from "ai/react";
 import { Assistant } from "@/models/assistants";
 import { Message } from "@/models/messages";
 import vhCheck from "vh-check";
-import { useEffect, useState } from "react";
-import { WithId } from "mongodb";
+import { useEffect, useRef, useState } from "react";
+import { ObjectId, WithId } from "mongodb";
 
 export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     vhCheck();
   }, []);
 
-  const {
-    messages,
-    setMessages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    stop,
-    isLoading,
-  } = useChat();
+  const [assistant, setassistant] = useState<WithId<Assistant>>({
+    _id: new ObjectId(),
+    name: "",
+    description: "",
+    avatar: "",
+    system: "",
+  });
 
-  const [avatar, setAvatar] = useState("/user.jpeg");
-
+  const [initMessages, setInitMessages] = useState<WithId<Message>[]>([]);
   useEffect(() => {
     (async () => {
-      const messages: AiMessage[] = [];
+      const messages: WithId<Message>[] = [];
       let response = await fetch(`/api/assistants/${params.id}`);
       const assistant: WithId<Assistant> = await response.json();
-      if (assistant.avatar) {
-        setAvatar(assistant.avatar);
-      }
+      setassistant(assistant);
       if (assistant.system) {
         messages.push({
+          _id: new ObjectId(),
           id: "",
+          assistantId: assistant._id,
           role: "system",
           content: assistant.system ?? "",
         });
@@ -48,10 +45,33 @@ export default function Page({ params }: { params: { id: string } }) {
       if (msgs.length > 0) {
         messages.push(...msgs);
       }
-      setMessages(messages);
+      setInitMessages(messages);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { messages, input, handleInputChange, handleSubmit, stop, isLoading } =
+    useChat({
+      onFinish(message) {
+        fetch(`/api/assistants/${assistant._id.toString()}`, {
+          method: "POST",
+          body: JSON.stringify({
+            ...message,
+            assistantId: assistant._id,
+          }),
+        });
+        if (messages.length > 2) {
+          fetch(`/api/assistants/${assistant._id.toString()}`, {
+            method: "POST",
+            body: JSON.stringify({
+              ...messages[messages.length - 1],
+              assistantId: assistant._id,
+            }),
+          });
+        }
+      },
+      initialMessages: initMessages,
+    });
 
   return (
     <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
@@ -63,7 +83,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <MsgAssistant
                   key={message.id}
                   msg={message.content}
-                  avatar={avatar}
+                  avatar={assistant.avatar}
                 />
               );
             case "user":
