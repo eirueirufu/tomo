@@ -46,7 +46,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const { messages, input, handleInputChange, handleSubmit, stop, isLoading } =
     useChat({
       onFinish(message) {
-        fetch(`/api/assistants/${assistant?._id.toString()}`, {
+        fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
           method: "POST",
           body: JSON.stringify({
             ...message,
@@ -54,7 +54,7 @@ export default function Page({ params }: { params: { id: string } }) {
           }),
         });
         if (messages.length > 2) {
-          fetch(`/api/assistants/${assistant?._id.toString()}`, {
+          fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
             method: "POST",
             body: JSON.stringify({
               ...messages[messages.length - 1],
