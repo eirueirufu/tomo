@@ -53,15 +53,6 @@ export default function Page({ params }: { params: { id: string } }) {
             assistantId: assistant?._id,
           }),
         });
-        if (messages.length >= 2) {
-          fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
-            method: "POST",
-            body: JSON.stringify({
-              ...messages[messages.length - 2],
-              assistantId: assistant?._id,
-            }),
-          });
-        }
       },
       initialMessages: initMessages,
     });
@@ -114,6 +105,17 @@ export default function Page({ params }: { params: { id: string } }) {
             type="submit"
             radius="full"
             className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+            onClick={() => {
+              if (messages.length >= 2) {
+                fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
+                  method: "POST",
+                  body: JSON.stringify({
+                    ...messages[messages.length - 2],
+                    assistantId: assistant?._id,
+                  }),
+                });
+              }
+            }}
           >
             <PaperPlaneTilt size={32} weight="bold" />
           </Button>
