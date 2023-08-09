@@ -16,24 +16,17 @@ export default function Page({ params }: { params: { id: string } }) {
     vhCheck();
   }, []);
 
-  const [assistant, setassistant] = useState<WithId<Assistant>>({
-    _id: new ObjectId(),
-    name: "",
-    description: "",
-    avatar: "",
-    system: "",
-  });
+  const [assistant, setassistant] = useState<WithId<Assistant>>();
 
-  const [initMessages, setInitMessages] = useState<WithId<Message>[]>([]);
+  const [initMessages, setInitMessages] = useState<Message[]>([]);
   useEffect(() => {
     (async () => {
-      const messages: WithId<Message>[] = [];
+      const messages: Message[] = [];
       let response = await fetch(`/api/assistants/${params.id}`);
       const assistant: WithId<Assistant> = await response.json();
       setassistant(assistant);
       if (assistant.system) {
         messages.push({
-          _id: new ObjectId(),
           id: "",
           assistantId: assistant._id,
           role: "system",
@@ -53,19 +46,19 @@ export default function Page({ params }: { params: { id: string } }) {
   const { messages, input, handleInputChange, handleSubmit, stop, isLoading } =
     useChat({
       onFinish(message) {
-        fetch(`/api/assistants/${assistant._id.toString()}`, {
+        fetch(`/api/assistants/${assistant!._id.toString()}`, {
           method: "POST",
           body: JSON.stringify({
             ...message,
-            assistantId: assistant._id,
+            assistantId: assistant!._id,
           }),
         });
         if (messages.length > 2) {
-          fetch(`/api/assistants/${assistant._id.toString()}`, {
+          fetch(`/api/assistants/${assistant!._id.toString()}`, {
             method: "POST",
             body: JSON.stringify({
               ...messages[messages.length - 1],
-              assistantId: assistant._id,
+              assistantId: assistant!._id,
             }),
           });
         }
@@ -83,7 +76,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 <MsgAssistant
                   key={message.id}
                   msg={message.content}
-                  avatar={assistant.avatar}
+                  avatar={assistant!.avatar}
                 />
               );
             case "user":
