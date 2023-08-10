@@ -19,9 +19,9 @@ export async function GET(
   console.log(limit);
   const cursor = collection
     .find({ assistantId: new ObjectId(params.id) })
-    .sort({ createdAt: 1 })
+    .sort({ createdAt: -1 })
     .limit(limit);
-  return NextResponse.json(await cursor.toArray());
+  return NextResponse.json((await cursor.toArray()).reverse());
 }
 
 export async function POST(
