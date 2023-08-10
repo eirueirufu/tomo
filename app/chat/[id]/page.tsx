@@ -10,6 +10,7 @@ import { Message } from "@/models/messages";
 import vhCheck from "vh-check";
 import { useEffect, useRef, useState } from "react";
 import { ObjectId, WithId } from "mongodb";
+import { json } from "stream/consumers";
 
 export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function Page({ params }: { params: { id: string } }) {
       const messages: Message[] = [];
       let response = await fetch(`/api/assistants/${params.id}`);
       const assistant: WithId<Assistant> = await response.json();
+      console.log(assistant);
       setassistant(assistant);
       if (assistant.system) {
         messages.push({
@@ -33,7 +35,9 @@ export default function Page({ params }: { params: { id: string } }) {
           content: assistant.system ?? "",
         });
       }
-      response = await fetch(`/api/assistants/${params.id}/messages`);
+      response = await fetch(
+        `/api/assistants/${params.id}/messages?limit=${assistant.msgNum}`,
+      );
       const msgs: WithId<Message>[] = await response.json();
       if (msgs.length > 0) {
         messages.push(...msgs);

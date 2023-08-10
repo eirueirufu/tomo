@@ -5,4 +5,9 @@ export interface Assistant {
   description: string;
   avatar: string;
   system: string;
+  msgNum: number;
+  preMsgs: {
+    role: "user" | "assistant";
+    content: string;
+  }[];
 }
