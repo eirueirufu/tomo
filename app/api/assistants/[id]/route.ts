@@ -30,6 +30,7 @@ export async function PUT(
         description: assistant.description,
         avatar: assistant.avatar,
         system: assistant.system,
+        msgNum: assistant.msgNum,
       },
     },
   );

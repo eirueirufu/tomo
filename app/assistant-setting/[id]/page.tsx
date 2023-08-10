@@ -17,12 +17,14 @@ import { useState, useEffect } from "react";
 import vhCheck from "vh-check";
 import { WithId } from "mongodb";
 import { Assistant } from "@/models/assistants";
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     vhCheck();
   }, []);
 
+  const router = useRouter();
   const [assistant, setAssistant] = useState<WithId<Assistant>>();
   useEffect(() => {
     (async () => {
@@ -48,9 +50,9 @@ export default function Page({ params }: { params: { id: string } }) {
           type="text"
           placeholder="Name"
           defaultValue={assistant?.name}
-          onChange={(e) => {
+          onValueChange={(e) => {
             if (assistant) {
-              assistant.name = e.target.value;
+              assistant.name = e ?? "";
               setAssistant(assistant);
             }
           }}
@@ -60,9 +62,21 @@ export default function Page({ params }: { params: { id: string } }) {
           type="text"
           placeholder="Description"
           defaultValue={assistant?.description}
-          onChange={(e) => {
+          onValueChange={(e) => {
             if (assistant) {
-              assistant.description = e.target.value;
+              assistant.description = e ?? "";
+              setAssistant(assistant);
+            }
+          }}
+        />
+        <Input
+          size="sm"
+          type="number"
+          placeholder="MsgNum"
+          defaultValue={assistant?.msgNum.toString()}
+          onValueChange={(e) => {
+            if (assistant) {
+              assistant.msgNum = parseInt(e ?? ("" as string), 10) || 0;
               setAssistant(assistant);
             }
           }}
@@ -102,6 +116,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 method: "PUT",
                 body: JSON.stringify(assistant),
               });
+              router.push(`/`);
             }}
           />
         </Button>
