@@ -36,3 +36,15 @@ export async function PUT(
   );
   return new NextResponse(null, { status: 204 });
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } },
+) {
+  const client = await clientPromise;
+  const collection = client
+    .db("gpt")
+    .collection<WithId<Assistant>>("assistants");
+  await collection.deleteOne({ _id: new ObjectId(params.id) });
+  return new NextResponse(null, { status: 204 });
+}

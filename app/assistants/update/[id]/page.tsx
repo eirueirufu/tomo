@@ -12,7 +12,7 @@ import {
   Textarea,
   Button,
 } from "@nextui-org/react";
-import { PaperPlaneTilt, File } from "@phosphor-icons/react";
+import { PaperPlaneTilt, File, FileX } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import vhCheck from "vh-check";
 import { WithId } from "mongodb";
@@ -98,27 +98,41 @@ export default function Page({ params }: { params: { id: string } }) {
         />
       </CardBody>
       <Divider />
-      <CardFooter className="flex flex-row-reverse">
+      <CardFooter className="flex flex-row-reverse gap-2">
         <Button
           size="sm"
           type="submit"
           radius="full"
           className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          onClick={async () => {
+            if (!assistant) {
+              return;
+            }
+            await fetch(`/api/assistants/${assistant._id.toString()}`, {
+              method: "PUT",
+              body: JSON.stringify(assistant),
+            });
+            router.push(`/`);
+          }}
         >
-          <File
-            size={24}
-            weight="bold"
-            onClick={async () => {
-              if (!assistant) {
-                return;
-              }
-              await fetch(`/api/assistants/${assistant._id.toString()}`, {
-                method: "PUT",
-                body: JSON.stringify(assistant),
-              });
-              router.push(`/`);
-            }}
-          />
+          <File size={32} weight="bold" />
+        </Button>
+        <Button
+          size="sm"
+          type="submit"
+          radius="full"
+          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          onClick={async () => {
+            if (!assistant) {
+              return;
+            }
+            await fetch(`/api/assistants/${assistant._id.toString()}`, {
+              method: "DELETE",
+            });
+            router.push(`/`);
+          }}
+        >
+          <FileX size={32} weight="bold" />
         </Button>
       </CardFooter>
     </Card>
