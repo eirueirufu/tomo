@@ -100,10 +100,8 @@ export default function Page({ params }: { params: { id: string } }) {
       <Divider />
       <CardFooter className="flex flex-row-reverse gap-2">
         <Button
-          size="sm"
-          type="submit"
-          radius="full"
-          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          color="success"
+          variant="flat"
           onClick={async () => {
             if (!assistant) {
               return;
@@ -115,13 +113,11 @@ export default function Page({ params }: { params: { id: string } }) {
             router.push(`/`);
           }}
         >
-          <File size={32} weight="bold" />
+          SAVE
         </Button>
         <Button
-          size="sm"
-          type="submit"
-          radius="full"
-          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          color="danger"
+          variant="flat"
           onClick={async () => {
             if (!assistant) {
               return;
@@ -132,7 +128,7 @@ export default function Page({ params }: { params: { id: string } }) {
             router.push(`/`);
           }}
         >
-          <FileX size={32} weight="bold" />
+          DELETE
         </Button>
       </CardFooter>
     </Card>

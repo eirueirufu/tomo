@@ -8,6 +8,9 @@ import {
   Avatar,
   Button,
   User,
+  Navbar,
+  NavbarContent,
+  NavbarItem,
 } from "@nextui-org/react";
 
 import { useEffect, useState } from "react";
@@ -35,16 +38,21 @@ export default function Home() {
 
   return (
     <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
-      <div className="flex flex-row-reverse p-2 bg-zinc-900">
-        <PlusCircle
-          size={32}
-          weight="bold"
-          className="mr-3"
-          onClick={() => {
-            router.push(`/assistants/insert`);
-          }}
-        />
-      </div>
+      <Navbar>
+        <NavbarContent justify="end">
+          <NavbarItem>
+            <Button
+              color="primary"
+              variant="flat"
+              onClick={() => {
+                router.push(`/assistants/insert`);
+              }}
+            >
+              ADD
+            </Button>
+          </NavbarItem>
+        </NavbarContent>
+      </Navbar>
       <div className="w-full flex-1 flex flex-col gap-2 items-center p-3">
         {assistants.map((assistant) => {
           return (

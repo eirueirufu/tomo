@@ -99,25 +99,20 @@ export default function Page({ params }: { params: { id: string } }) {
       <Divider />
       <CardFooter className="flex flex-row-reverse">
         <Button
-          size="sm"
-          type="submit"
-          radius="full"
-          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          color="success"
+          variant="flat"
+          onClick={async () => {
+            if (!assistant) {
+              return;
+            }
+            await fetch(`/api/assistants`, {
+              method: "POST",
+              body: JSON.stringify(assistant),
+            });
+            router.push(`/`);
+          }}
         >
-          <File
-            size={24}
-            weight="bold"
-            onClick={async () => {
-              if (!assistant) {
-                return;
-              }
-              await fetch(`/api/assistants`, {
-                method: "POST",
-                body: JSON.stringify(assistant),
-              });
-              router.push(`/`);
-            }}
-          />
+          SAVE
         </Button>
       </CardFooter>
     </Card>
