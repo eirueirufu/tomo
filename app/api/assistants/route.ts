@@ -14,3 +14,11 @@ export async function GET(request: NextRequest) {
   const assistants = await cursor.toArray();
   return NextResponse.json(assistants);
 }
+
+export async function POST(request: NextRequest) {
+  const client = await clientPromise;
+  const collection = client.db("gpt").collection<Assistant>("assistants");
+  const assistant: Assistant = await request.json();
+  const result = await collection.insertOne(assistant);
+  return NextResponse.json(result.insertedId);
+}
