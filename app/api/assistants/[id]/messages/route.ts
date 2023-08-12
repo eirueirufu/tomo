@@ -16,7 +16,6 @@ export async function GET(
   }
   const client = await clientPromise;
   const collection = client.db("gpt").collection<WithId<Message>>("messages");
-  console.log(limit);
   const cursor = collection
     .find({ assistantId: new ObjectId(params.id) })
     .sort({ createdAt: -1 })

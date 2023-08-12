@@ -34,6 +34,18 @@ export default function Page({ params }: { params: { id: string } }) {
           content: assistant.system ?? "",
         });
       }
+      assistant.preMsgs.forEach((item) => {
+        if (!item.content) {
+          return;
+        }
+        messages.push({
+          id: "",
+          assistantId: assistant._id,
+          role: item.role,
+          content: item.content,
+        });
+      });
+
       response = await fetch(
         `/api/assistants/${params.id}/messages?limit=${assistant.msgNum}`,
       );
