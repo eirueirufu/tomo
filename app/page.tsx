@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
-      <Navbar className="border-b-1 border-zinc-500">
+      <Navbar className="border-b-1 border-zinc-400">
         <NavbarContent justify="end">
           <NavbarItem>
             <Button
