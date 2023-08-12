@@ -1,9 +1,17 @@
 "use client";
 
-import { Textarea, Button, Spinner } from "@nextui-org/react";
+import {
+  Textarea,
+  Button,
+  Spinner,
+  Navbar,
+  NavbarContent,
+  NavbarItem,
+  NavbarBrand,
+} from "@nextui-org/react";
 import MsgAssistant from "@/components/msg-assistant";
 import MsgUser from "@/components/msg-user";
-import { PaperPlaneTilt } from "@phosphor-icons/react";
+import { PaperPlaneTilt, Stop } from "@phosphor-icons/react";
 import { useChat, Message as AiMessage } from "ai/react";
 import { Assistant } from "@/models/assistants";
 import { Message } from "@/models/messages";
@@ -96,58 +104,71 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [messages]);
 
   return (
-    <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
-      <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
-        {[...messages].reverse().map((message) => {
-          switch (message.role) {
-            case "assistant":
-              return (
-                <MsgAssistant
-                  key={message.id}
-                  msg={message.content}
-                  avatar={assistant!.avatar}
-                />
-              );
-            case "user":
-              return <MsgUser key={message.id} msg={message.content} />;
-            default:
-              break;
-          }
-        })}
+    <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
+      <Navbar className="bg-zinc-900">
+        <NavbarBrand></NavbarBrand>
+        <NavbarContent justify="center">
+          <NavbarItem className="flex justify-center items-center">
+            <h1 className="font-bold">{assistant?.name}</h1>
+            {isLoading && <Spinner className="ml-3" color="warning" />}
+          </NavbarItem>
+        </NavbarContent>
+        <NavbarContent justify="end"></NavbarContent>
+      </Navbar>
+
+      <div className="container flex-1 m-auto flex flex-col items-center justify-center">
+        <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
+          {[...messages].reverse().map((message) => {
+            switch (message.role) {
+              case "assistant":
+                return (
+                  <MsgAssistant
+                    key={message.id}
+                    msg={message.content}
+                    avatar={assistant!.avatar}
+                  />
+                );
+              case "user":
+                return <MsgUser key={message.id} msg={message.content} />;
+              default:
+                break;
+            }
+          })}
+        </div>
+
+        <form
+          id="chatArea"
+          onSubmit={handleSubmit}
+          className="w-full flex items-center justify-between gap-3 p-1"
+        >
+          <Textarea
+            placeholder="メッセージをインプットください"
+            minRows={1}
+            maxRows={3}
+            value={input}
+            onChange={handleInputChange}
+          />
+
+          {isLoading ? (
+            <Button
+              type="button"
+              radius="full"
+              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+              onClick={stop}
+            >
+              <Stop size={32} weight="bold" />
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              radius="full"
+              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+            >
+              <PaperPlaneTilt size={32} weight="bold" />
+            </Button>
+          )}
+        </form>
       </div>
-
-      <form
-        id="chatArea"
-        onSubmit={handleSubmit}
-        className="w-full flex items-center justify-between gap-3 p-1"
-      >
-        <Textarea
-          placeholder="メッセージをインプットください"
-          minRows={1}
-          maxRows={3}
-          value={input}
-          onChange={handleInputChange}
-        />
-
-        {isLoading ? (
-          <Button
-            type="button"
-            radius="full"
-            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-            onClick={stop}
-          >
-            <Spinner />
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            radius="full"
-            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-          >
-            <PaperPlaneTilt size={32} weight="bold" />
-          </Button>
-        )}
-      </form>
     </div>
   );
 }
