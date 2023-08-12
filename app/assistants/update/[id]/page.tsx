@@ -183,40 +183,40 @@ export default function Page({ params }: { params: { id: string } }) {
                   break;
               }
             })}
+            <div className="flex justify-between">
+              <Button
+                color="success"
+                variant="flat"
+                onClick={() => {
+                  const msgs = [...preMsgs];
+                  msgs.push({ role: "assistant", content: "" });
+                  setPreMsgs(msgs);
+                  if (assistant) {
+                    assistant.preMsgs = msgs;
+                    setAssistant(assistant);
+                  }
+                }}
+              >
+                ADD
+              </Button>
+              <Button
+                color="success"
+                variant="flat"
+                onClick={async () => {
+                  const msgs = [...preMsgs];
+                  msgs.push({ role: "user", content: "" });
+                  setPreMsgs(msgs);
+                  if (assistant) {
+                    assistant.preMsgs = msgs;
+                    setAssistant(assistant);
+                  }
+                }}
+              >
+                ADD
+              </Button>
+            </div>
           </AccordionItem>
         </Accordion>
-        <div className="flex justify-between">
-          <Button
-            color="success"
-            variant="flat"
-            onClick={() => {
-              const msgs = [...preMsgs];
-              msgs.push({ role: "assistant", content: "" });
-              setPreMsgs(msgs);
-              if (assistant) {
-                assistant.preMsgs = msgs;
-                setAssistant(assistant);
-              }
-            }}
-          >
-            ADD
-          </Button>
-          <Button
-            color="success"
-            variant="flat"
-            onClick={async () => {
-              const msgs = [...preMsgs];
-              msgs.push({ role: "user", content: "" });
-              setPreMsgs(msgs);
-              if (assistant) {
-                assistant.preMsgs = msgs;
-                setAssistant(assistant);
-              }
-            }}
-          >
-            ADD
-          </Button>
-        </div>
       </CardBody>
       <Divider />
 
