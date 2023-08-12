@@ -25,7 +25,6 @@ export default function Page({ params }: { params: { id: string } }) {
       const messages: Message[] = [];
       let response = await fetch(`/api/assistants/${params.id}`);
       const assistant: WithId<Assistant> = await response.json();
-      console.log(assistant);
       setassistant(assistant);
       if (assistant.system) {
         messages.push({
