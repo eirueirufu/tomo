@@ -116,59 +116,57 @@ export default function Page({ params }: { params: { id: string } }) {
         <NavbarContent justify="end"></NavbarContent>
       </Navbar>
 
-      <div className="container flex-1 m-auto flex flex-col items-center justify-center">
-        <div className="w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
-          {[...messages].reverse().map((message) => {
-            switch (message.role) {
-              case "assistant":
-                return (
-                  <MsgAssistant
-                    key={message.id}
-                    msg={message.content}
-                    avatar={assistant!.avatar}
-                  />
-                );
-              case "user":
-                return <MsgUser key={message.id} msg={message.content} />;
-              default:
-                break;
-            }
-          })}
-        </div>
-
-        <form
-          id="chatArea"
-          onSubmit={handleSubmit}
-          className="w-full flex items-center justify-between gap-3 p-1"
-        >
-          <Textarea
-            placeholder="メッセージをインプットください"
-            minRows={1}
-            maxRows={3}
-            value={input}
-            onChange={handleInputChange}
-          />
-
-          {isLoading ? (
-            <Button
-              type="button"
-              radius="full"
-              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-              onClick={stop}
-            >
-              <Stop size={32} weight="bold" />
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              radius="full"
-              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-            >
-              <PaperPlaneTilt size={32} weight="bold" />
-            </Button>
-          )}
-        </form>
+      <div className="container m-auto w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
+        {[...messages].reverse().map((message) => {
+          switch (message.role) {
+            case "assistant":
+              return (
+                <MsgAssistant
+                  key={message.id}
+                  msg={message.content}
+                  avatar={assistant!.avatar}
+                />
+              );
+            case "user":
+              return <MsgUser key={message.id} msg={message.content} />;
+            default:
+              break;
+          }
+        })}
       </div>
+
+      <form
+        id="chatArea"
+        onSubmit={handleSubmit}
+        className="container m-auto w-full flex items-center justify-between gap-3 p-1"
+      >
+        <Textarea
+          placeholder="メッセージをインプットください"
+          minRows={1}
+          maxRows={3}
+          value={input}
+          onChange={handleInputChange}
+        />
+
+        {isLoading ? (
+          <Button
+            type="button"
+            radius="full"
+            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+            onClick={stop}
+          >
+            <Stop size={32} weight="bold" />
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            radius="full"
+            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          >
+            <PaperPlaneTilt size={32} weight="bold" />
+          </Button>
+        )}
+      </form>
     </div>
   );
 }
