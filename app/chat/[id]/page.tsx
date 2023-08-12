@@ -11,6 +11,7 @@ import vhCheck from "vh-check";
 import { useEffect, useRef, useState } from "react";
 import { ObjectId, WithId } from "mongodb";
 import { json } from "stream/consumers";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Page({ params }: { params: { id: string } }) {
       setassistant(assistant);
       if (assistant.system) {
         messages.push({
-          id: "",
+          id: uuidv4(),
           assistantId: assistant._id,
           role: "system",
           content: assistant.system ?? "",
@@ -39,7 +40,7 @@ export default function Page({ params }: { params: { id: string } }) {
           return;
         }
         messages.push({
-          id: "",
+          id: uuidv4(),
           assistantId: assistant._id,
           role: item.role,
           content: item.content,
@@ -89,6 +90,10 @@ export default function Page({ params }: { params: { id: string } }) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
+
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   return (
     <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col items-center justify-center">
