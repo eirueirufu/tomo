@@ -31,6 +31,7 @@ export async function PUT(
         avatar: assistant.avatar,
         system: assistant.system,
         msgNum: assistant.msgNum,
+        preMsgs: assistant.preMsgs,
       },
     },
   );
