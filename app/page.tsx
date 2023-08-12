@@ -37,8 +37,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
-      <Navbar>
+    <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
+      <Navbar className="border-b-1 border-zinc-500">
         <NavbarContent justify="end">
           <NavbarItem>
             <Button
@@ -53,7 +53,7 @@ export default function Home() {
           </NavbarItem>
         </NavbarContent>
       </Navbar>
-      <div className="w-full flex-1 flex flex-col gap-2 items-center p-3">
+      <div className="container m-auto flex-1 flex flex-col gap-2 items-center p-3">
         {assistants.map((assistant) => {
           return (
             <Card
