@@ -36,6 +36,7 @@ export default function Page({ params }: { params: { id: string } }) {
     msgNum: 0,
     preMsgs: [],
   });
+  const [avatar, setAvatar] = useState("/assistant.svg");
   const [preMsgs, setPreMsgs] = useState<
     {
       role: "user" | "assistant";
@@ -46,13 +47,44 @@ export default function Page({ params }: { params: { id: string } }) {
   return (
     <Card className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto">
       <CardHeader className="flex gap-3 flex-col sm:flex-row">
-        <Image
-          alt="nextui logo"
-          radius="sm"
-          src={assistant.avatar}
-          width={48}
-          height={48}
-        />
+        <label htmlFor="avatar">
+          <Image
+            alt="avatar"
+            radius="sm"
+            src={avatar}
+            width={100}
+            height={100}
+          />
+        </label>
+        <Input
+          id="avatar"
+          size="sm"
+          type="file"
+          className="hidden"
+          accept="image/*"
+          onChange={(e) => {
+            (async function () {
+              if (!e.target.files || e.target.files.length == 0) {
+                return;
+              }
+              const selectedFile = e.target.files[0];
+              if (!selectedFile.type.startsWith("image/")) {
+                return;
+              }
+              const reader = new FileReader();
+              reader.onload = (e) => {
+                if (!e.target) {
+                  return;
+                }
+                const val = e.target.result as string;
+                setAvatar(val);
+                assistant.avatar = val;
+                setAssistant(assistant);
+              };
+              reader.readAsDataURL(selectedFile);
+            })();
+          }}
+        ></Input>
         <Input
           size="sm"
           type="text"
