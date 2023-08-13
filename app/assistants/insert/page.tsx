@@ -31,7 +31,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const [assistant, setAssistant] = useState<Assistant>({
     name: "",
     description: "",
-    avatar: "",
+    avatar: "/assistant.svg",
     system: "",
     msgNum: 0,
     preMsgs: [],
