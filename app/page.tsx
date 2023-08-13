@@ -11,6 +11,7 @@ import {
   Navbar,
   NavbarContent,
   NavbarItem,
+  NavbarBrand,
 } from "@nextui-org/react";
 
 import { useEffect, useState } from "react";
@@ -39,10 +40,15 @@ export default function Home() {
   return (
     <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
       <Navbar className="bg-zinc-900">
+        <NavbarContent justify="start"></NavbarContent>
+        <NavbarBrand>
+          <p className="font-bold m-auto">TOMO</p>
+        </NavbarBrand>
         <NavbarContent justify="end">
           <NavbarItem>
             <Button
-              color="primary"
+              size="sm"
+              color="default"
               variant="flat"
               onClick={() => {
                 router.push(`/assistants/insert`);
