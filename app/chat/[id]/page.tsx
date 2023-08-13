@@ -134,39 +134,40 @@ export default function Page({ params }: { params: { id: string } }) {
           }
         })}
       </div>
+      {assistant && (
+        <form
+          id="chatArea"
+          onSubmit={handleSubmit}
+          className="container m-auto w-full flex items-center justify-between gap-3 p-1"
+        >
+          <Textarea
+            placeholder="メッセージをインプットください"
+            minRows={1}
+            maxRows={3}
+            value={input}
+            onChange={handleInputChange}
+          />
 
-      <form
-        id="chatArea"
-        onSubmit={handleSubmit}
-        className="container m-auto w-full flex items-center justify-between gap-3 p-1"
-      >
-        <Textarea
-          placeholder="メッセージをインプットください"
-          minRows={1}
-          maxRows={3}
-          value={input}
-          onChange={handleInputChange}
-        />
-
-        {isLoading ? (
-          <Button
-            type="button"
-            radius="full"
-            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-            onClick={stop}
-          >
-            <Stop size={32} weight="bold" />
-          </Button>
-        ) : (
-          <Button
-            type="submit"
-            radius="full"
-            className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-          >
-            <PaperPlaneTilt size={32} weight="bold" />
-          </Button>
-        )}
-      </form>
+          {isLoading ? (
+            <Button
+              type="button"
+              radius="full"
+              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+              onClick={stop}
+            >
+              <Stop size={32} weight="bold" />
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              radius="full"
+              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+            >
+              <PaperPlaneTilt size={32} weight="bold" />
+            </Button>
+          )}
+        </form>
+      )}
     </div>
   );
 }
