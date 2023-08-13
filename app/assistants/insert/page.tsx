@@ -46,7 +46,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <Card className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto">
-      <CardBody className="flex gap-3 flex-col sm:flex-row">
+      <CardBody className="flex gap-3 flex-col">
         <label htmlFor="avatar" className="mx-auto">
           <Image
             alt="avatar"
