@@ -66,7 +66,7 @@ export default function Home() {
               key={assistant._id.toString()}
               isHoverable
               isPressable
-              className="w-full p-3"
+              className="w-full p-3 overflow-visible"
               onClick={() => {
                 router.push(`/chat/${assistant._id.toString()}`);
               }}
