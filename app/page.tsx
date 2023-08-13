@@ -65,17 +65,23 @@ export default function Home() {
                 router.push(`/chat/${assistant._id.toString()}`);
               }}
             >
-              <User
-                name={assistant.name}
-                description={assistant.description}
-                avatarProps={{
-                  src: assistant.avatar,
-                }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  router.push(`/assistants/update/${assistant._id.toString()}`);
-                }}
-              />
+              <div className="flex flex-row">
+                <Avatar
+                  src={assistant.avatar}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(
+                      `/assistants/update/${assistant._id.toString()}`,
+                    );
+                  }}
+                />
+                <div className="text-start ml-2">
+                  <p className="text-sm">{assistant.name}</p>
+                  <p className="text-xs text-zinc-500">
+                    {assistant.description}
+                  </p>
+                </div>
+              </div>
             </Card>
           );
         })}
