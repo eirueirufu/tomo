@@ -46,8 +46,8 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <Card className="container h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto">
-      <CardHeader className="flex gap-3 flex-col sm:flex-row">
-        <label htmlFor="avatar">
+      <CardBody className="flex gap-3 flex-col sm:flex-row">
+        <label htmlFor="avatar" className="mx-auto">
           <Image
             alt="avatar"
             radius="sm"
@@ -121,9 +121,7 @@ export default function Page({ params }: { params: { id: string } }) {
             }
           }}
         />
-      </CardHeader>
-      <Divider />
-      <CardBody className="flex-1">
+        <Divider />
         <Textarea
           placeholder="メッセージをインプットください"
           minRows={10}
