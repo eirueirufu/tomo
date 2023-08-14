@@ -1,8 +1,8 @@
 import clientPromise from "@/lib/mongodb";
-import { Assistant } from "@/models/assistants";
+import { Assistant } from "@/models/assistant";
 import { NextRequest, NextResponse } from "next/server";
 import { WithId, ObjectId } from "mongodb";
-import { Message } from "@/models/messages";
+import { Message } from "@/models/message";
 
 export async function GET(
   request: NextRequest,

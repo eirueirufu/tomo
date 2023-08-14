@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import vhCheck from "vh-check";
-import { Assistant } from "@/models/assistants";
+import { Assistant } from "@/models/assistant";
 import { WithId } from "mongodb";
 import { PlusCircle } from "@phosphor-icons/react";
 import Loading from "@/components/loading";

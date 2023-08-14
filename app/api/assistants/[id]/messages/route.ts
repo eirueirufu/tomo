@@ -1,6 +1,6 @@
 import clientPromise from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
-import { Message } from "@/models/messages";
+import { Message } from "@/models/message";
 import { ObjectId, FindOptions } from "mongodb";
 import { WithId } from "mongodb";
 import { parse } from "url";

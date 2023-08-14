@@ -13,21 +13,32 @@ import MsgAssistant from "@/components/msg-assistant";
 import MsgUser from "@/components/msg-user";
 import { PaperPlaneTilt, Stop } from "@phosphor-icons/react";
 import { useChat, Message as AiMessage } from "ai/react";
-import { Assistant } from "@/models/assistants";
-import { Message } from "@/models/messages";
+import { Assistant } from "@/models/assistant";
+import { Message } from "@/models/message";
 import vhCheck from "vh-check";
 import { useEffect, useRef, useState } from "react";
 import { ObjectId, WithId } from "mongodb";
 import { json } from "stream/consumers";
 import { v4 as uuidv4 } from "uuid";
 import Loading from "@/components/loading";
+import { User } from "@/models/user";
+import { useRouter } from "next/navigation";
 
 export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
     vhCheck();
   }, []);
 
-  const [assistant, setassistant] = useState<WithId<Assistant>>();
+  const [assistant, setAssistant] = useState<WithId<Assistant>>();
+  const [user, setUser] = useState<User>({ avatar: "/user.svg" });
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(`/api/user`);
+      const user: User = await response.json();
+      setUser(user);
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [initMessages, setInitMessages] = useState<Message[]>([]);
   useEffect(() => {
@@ -35,7 +46,7 @@ export default function Page({ params }: { params: { id: string } }) {
       const messages: Message[] = [];
       let response = await fetch(`/api/assistants/${params.id}`);
       const assistant: WithId<Assistant> = await response.json();
-      setassistant(assistant);
+      setAssistant(assistant);
       if (assistant.system) {
         messages.push({
           id: uuidv4(),
@@ -122,13 +133,20 @@ export default function Page({ params }: { params: { id: string } }) {
             case "assistant":
               return (
                 <MsgAssistant
+                  id={assistant!._id.toString()}
                   key={message.id}
                   msg={message.content}
                   avatar={assistant!.avatar}
                 />
               );
             case "user":
-              return <MsgUser key={message.id} msg={message.content} />;
+              return (
+                <MsgUser
+                  key={message.id}
+                  avatar={user.avatar}
+                  msg={message.content}
+                />
+              );
             default:
               break;
           }

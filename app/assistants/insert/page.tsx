@@ -19,7 +19,7 @@ import { PaperPlaneTilt, File } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 import vhCheck from "vh-check";
 import { WithId } from "mongodb";
-import { Assistant } from "@/models/assistants";
+import { Assistant } from "@/models/assistant";
 import { useRouter } from "next/navigation";
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -177,7 +177,7 @@ export default function Page({ params }: { params: { id: string } }) {
                       className="w-full flex flex-row-reverse flex-nowrap p-2"
                     >
                       <Avatar
-                        src={"/user.jpeg"}
+                        src={"/user.svg"}
                         onClick={() => {
                           const msgs = preMsgs
                             .slice(0, index)

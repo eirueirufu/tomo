@@ -1,5 +1,5 @@
 import clientPromise from "@/lib/mongodb";
-import { Assistant } from "@/models/assistants";
+import { Assistant } from "@/models/assistant";
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { WithId } from "mongodb";
