@@ -111,7 +111,6 @@ export default function Page({ params }: { params: { id: string } }) {
         <NavbarContent justify="center">
           <NavbarItem className="flex justify-center items-center">
             <h1 className="font-bold">{assistant?.name}</h1>
-            {isLoading && <Spinner className="ml-3" color="warning" />}
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end"></NavbarContent>
