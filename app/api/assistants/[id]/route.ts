@@ -2,6 +2,7 @@ import clientPromise from "@/lib/mongodb";
 import { Assistant } from "@/models/assistants";
 import { NextRequest, NextResponse } from "next/server";
 import { WithId, ObjectId } from "mongodb";
+import { Message } from "@/models/messages";
 
 export async function GET(
   request: NextRequest,
@@ -43,9 +44,12 @@ export async function DELETE(
   { params }: { params: { id: string } },
 ) {
   const client = await clientPromise;
-  const collection = client
-    .db("gpt")
-    .collection<WithId<Assistant>>("assistants");
-  await collection.deleteOne({ _id: new ObjectId(params.id) });
+  const db = client.db("gpt");
+  await db
+    .collection<WithId<Assistant>>("assistants")
+    .deleteOne({ _id: new ObjectId(params.id) });
+  await db
+    .collection<Message>("message")
+    .deleteOne({ assistantId: new ObjectId(params.id) });
   return new NextResponse(null, { status: 204 });
 }
