@@ -49,7 +49,7 @@ export async function DELETE(
     .collection<WithId<Assistant>>("assistants")
     .deleteOne({ _id: new ObjectId(params.id) });
   await db
-    .collection<Message>("message")
-    .deleteOne({ assistantId: new ObjectId(params.id) });
+    .collection<Message>("messages")
+    .deleteMany({ assistantId: new ObjectId(params.id) });
   return new NextResponse(null, { status: 204 });
 }
