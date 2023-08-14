@@ -159,7 +159,7 @@ export default function Page({ params }: { params: { id: string } }) {
           className="container m-auto w-full flex items-center justify-between gap-3 p-1"
         >
           <Textarea
-            placeholder="メッセージをインプットください"
+            placeholder="Send a message"
             minRows={1}
             maxRows={3}
             value={input}

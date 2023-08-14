@@ -125,7 +125,7 @@ export default function Page({ params }: { params: { id: string } }) {
             />
             <Divider />
             <Textarea
-              placeholder="メッセージをインプットください"
+              placeholder="Send a message"
               minRows={10}
               maxRows={99}
               defaultValue={assistant.system}
