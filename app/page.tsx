@@ -21,6 +21,7 @@ import vhCheck from "vh-check";
 import { Assistant } from "@/models/assistants";
 import { WithId } from "mongodb";
 import { PlusCircle } from "@phosphor-icons/react";
+import Loading from "@/components/loading";
 
 export default function Home() {
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function Home() {
   }, []);
 
   const router = useRouter();
-  const [assistants, setAssistants] = useState<WithId<Assistant>[]>([]);
+  const [assistants, setAssistants] = useState<WithId<Assistant>[]>();
   useEffect(() => {
     (async () => {
       const response = await fetch("/api/assistants", { cache: "no-store" });
@@ -60,37 +61,41 @@ export default function Home() {
         </NavbarContent>
       </Navbar>
       <div className="container m-auto flex-1 flex flex-col gap-2 items-center p-3 overflow-y-auto">
-        {assistants.map((assistant) => {
-          return (
-            <Card
-              key={assistant._id.toString()}
-              isHoverable
-              isPressable
-              className="w-full p-3 overflow-visible"
-              onClick={() => {
-                router.push(`/chat/${assistant._id.toString()}`);
-              }}
-            >
-              <div className="flex flex-row">
-                <Avatar
-                  src={assistant.avatar}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    router.push(
-                      `/assistants/update/${assistant._id.toString()}`,
-                    );
-                  }}
-                />
-                <div className="text-start ml-2">
-                  <p className="text-sm">{assistant.name}</p>
-                  <p className="text-xs text-zinc-500">
-                    {assistant.description}
-                  </p>
+        {assistants ? (
+          assistants.map((assistant) => {
+            return (
+              <Card
+                key={assistant._id.toString()}
+                isHoverable
+                isPressable
+                className="w-full p-3 overflow-visible"
+                onClick={() => {
+                  router.push(`/chat/${assistant._id.toString()}`);
+                }}
+              >
+                <div className="flex flex-row">
+                  <Avatar
+                    src={assistant.avatar}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(
+                        `/assistants/update/${assistant._id.toString()}`,
+                      );
+                    }}
+                  />
+                  <div className="text-start ml-2">
+                    <p className="text-sm">{assistant.name}</p>
+                    <p className="text-xs text-zinc-500">
+                      {assistant.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </Card>
-          );
-        })}
+              </Card>
+            );
+          })
+        ) : (
+          <Loading />
+        )}
       </div>
     </div>
   );

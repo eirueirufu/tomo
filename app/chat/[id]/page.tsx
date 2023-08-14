@@ -20,6 +20,7 @@ import { useEffect, useRef, useState } from "react";
 import { ObjectId, WithId } from "mongodb";
 import { json } from "stream/consumers";
 import { v4 as uuidv4 } from "uuid";
+import Loading from "@/components/loading";
 
 export default function Page({ params }: { params: { id: string } }) {
   useEffect(() => {
@@ -134,7 +135,7 @@ export default function Page({ params }: { params: { id: string } }) {
           }
         })}
       </div>
-      {assistant && (
+      {assistant ? (
         <form
           id="chatArea"
           onSubmit={handleSubmit}
@@ -167,6 +168,8 @@ export default function Page({ params }: { params: { id: string } }) {
             </Button>
           )}
         </form>
+      ) : (
+        <Loading />
       )}
     </div>
   );
