@@ -22,6 +22,7 @@ import { Assistant } from "@/models/assistant";
 import { WithId } from "mongodb";
 import { PlusCircle } from "@phosphor-icons/react";
 import Loading from "@/components/loading";
+import { ThemeSwitcher } from "@/components/themeSwitch";
 
 export default function Home() {
   useEffect(() => {
@@ -40,12 +41,15 @@ export default function Home() {
 
   return (
     <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
-      <Navbar className="bg-zinc-900">
+      <Navbar isBordered>
         <NavbarContent justify="start"></NavbarContent>
         <NavbarBrand>
           <p className="font-bold m-auto">TOMO</p>
         </NavbarBrand>
         <NavbarContent justify="end">
+          <NavbarItem>
+            <ThemeSwitcher />
+          </NavbarItem>
           <NavbarItem>
             <Button
               size="sm"

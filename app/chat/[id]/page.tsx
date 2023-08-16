@@ -117,7 +117,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
-      <Navbar className="bg-zinc-900">
+      <Navbar isBordered>
         <NavbarBrand></NavbarBrand>
         <NavbarContent justify="center">
           <NavbarItem className="flex justify-center items-center">

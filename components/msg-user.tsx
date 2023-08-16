@@ -1,4 +1,4 @@
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Card, CardBody } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 export default function MsgUser(props: { avatar?: string; msg: string }) {
@@ -13,9 +13,11 @@ export default function MsgUser(props: { avatar?: string; msg: string }) {
           router.push(`/user`);
         }}
       />
-      <div className="mr-2 max-w-[70%] bg-slate-600 rounded-xl bottom-1 p-2">
-        {msg}
-      </div>
+      <Card className="max-w-[70%] mr-2">
+        <CardBody>
+          <p>{msg}</p>
+        </CardBody>
+      </Card>
     </div>
   );
 }
