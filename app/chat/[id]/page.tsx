@@ -9,8 +9,8 @@ import {
   NavbarItem,
   NavbarBrand,
 } from "@nextui-org/react";
-import MsgAssistant from "@/components/msg-assistant";
-import MsgUser from "@/components/msg-user";
+import MsgAssistant from "./msg-assistant";
+import MsgUser from "./msg-user";
 import { PaperPlaneTilt, Stop } from "@phosphor-icons/react";
 import { useChat, Message as AiMessage } from "ai/react";
 import { Assistant } from "@/models/assistant";
@@ -110,10 +110,6 @@ export default function Page({ params }: { params: { id: string } }) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
-
-  useEffect(() => {
-    console.log(messages);
-  }, [messages]);
 
   return (
     <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">

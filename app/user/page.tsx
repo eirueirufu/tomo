@@ -21,8 +21,6 @@ import vhCheck from "vh-check";
 import { WithId } from "mongodb";
 import { Assistant } from "@/models/assistant";
 import { useRouter } from "next/navigation";
-import MsgAssistant from "@/components/msg-assistant";
-import MsgUser from "@/components/msg-user";
 import Loading from "@/components/loading";
 import { User } from "@/models/user";
 
