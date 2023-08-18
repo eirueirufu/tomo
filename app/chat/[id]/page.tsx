@@ -95,7 +95,7 @@ export default function Page({ params }: { params: { id: string } }) {
   );
 }
 
-export function InputArea(props: {
+function InputArea(props: {
   assistant?: WithId<Assistant>;
   initMessages: Message[];
   setMessage: (msgs: AiMessage[]) => void;
@@ -173,7 +173,7 @@ export function InputArea(props: {
   );
 }
 
-export function Nav(props: { name: string }) {
+function Nav(props: { name: string }) {
   return (
     <Navbar isBordered>
       <NavbarBrand></NavbarBrand>
@@ -187,7 +187,7 @@ export function Nav(props: { name: string }) {
   );
 }
 
-export function MsgList(props: {
+function MsgList(props: {
   user?: User;
   assistant?: WithId<Assistant>;
   msgs?: AiMessage[];

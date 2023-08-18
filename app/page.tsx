@@ -42,7 +42,7 @@ export default function Home() {
   );
 }
 
-export function Nav() {
+function Nav() {
   const router = useRouter();
   return (
     <Navbar isBordered>
@@ -71,7 +71,7 @@ export function Nav() {
   );
 }
 
-export function ChatList(props: {
+function ChatList(props: {
   assistants: WithId<Assistant>[] | undefined;
 }): JSX.Element {
   const router = useRouter();
