@@ -34,8 +34,8 @@ export default function Home() {
 
   return (
     <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
+      <Nav />
       <div className="container m-auto flex-1 flex flex-col gap-2 items-center p-3 overflow-y-auto">
-        <Nav />
         <ChatList assistants={assistants} />
       </div>
     </div>
