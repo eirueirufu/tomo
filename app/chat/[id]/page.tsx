@@ -78,19 +78,40 @@ export default function Page({ params }: { params: { id: string } }) {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const [messages, setMessage] = useState<AiMessage[]>();
 
+  return (
+    <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
+      <Nav name={assistant?.name ?? ""} />
+      <div className="container m-auto w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
+        <MsgList user={user} assistant={assistant} msgs={messages} />
+      </div>
+      <InputArea
+        assistant={assistant}
+        initMessages={initMessages}
+        setMessage={setMessage}
+      />
+    </div>
+  );
+}
+
+export function InputArea(props: {
+  assistant?: WithId<Assistant>;
+  initMessages: Message[];
+  setMessage: (msgs: AiMessage[]) => void;
+}) {
   const { messages, input, handleInputChange, handleSubmit, stop, isLoading } =
     useChat({
       onFinish(message) {
-        fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
+        fetch(`/api/assistants/${props.assistant?._id.toString()}/messages`, {
           method: "POST",
           body: JSON.stringify({
             ...message,
-            assistantId: assistant?._id,
+            assistantId: props.assistant?._id,
           }),
         });
       },
-      initialMessages: initMessages,
+      initialMessages: props.initMessages,
     });
 
   useEffect(() => {
@@ -101,45 +122,95 @@ export default function Page({ params }: { params: { id: string } }) {
     ) {
       return;
     }
-    fetch(`/api/assistants/${assistant?._id.toString()}/messages`, {
+    fetch(`/api/assistants/${props.assistant?._id.toString()}/messages`, {
       method: "POST",
       body: JSON.stringify({
         ...messages[messages.length - 1],
-        assistantId: assistant?._id,
+        assistantId: props.assistant?._id,
       }),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading]);
 
-  return (
-    <div className="h-[calc(100vh_-_var(--vh-offset,_0px))] m-auto flex flex-col">
-      <Navbar isBordered>
-        <NavbarBrand></NavbarBrand>
-        <NavbarContent justify="center">
-          <NavbarItem className="flex justify-center items-center">
-            <h1 className="font-bold">{assistant?.name}</h1>
-          </NavbarItem>
-        </NavbarContent>
-        <NavbarContent justify="end"></NavbarContent>
-      </Navbar>
+  useEffect(() => {
+    props.setMessage(messages);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
 
-      <div className="container m-auto w-full flex-1 flex flex-col-reverse gap-2 overflow-y-auto">
-        {[...messages].reverse().map((message) => {
+  return (
+    <form
+      id="chatArea"
+      onSubmit={handleSubmit}
+      className="container m-auto w-full flex items-center justify-between gap-3 p-1"
+    >
+      <Textarea
+        placeholder="Send a message"
+        minRows={1}
+        maxRows={3}
+        value={input}
+        onChange={handleInputChange}
+      />
+
+      {isLoading ? (
+        <Button
+          type="button"
+          radius="full"
+          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+          onClick={stop}
+        >
+          <Stop size={32} weight="bold" />
+        </Button>
+      ) : (
+        <Button
+          type="submit"
+          radius="full"
+          className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
+        >
+          <PaperPlaneTilt size={32} weight="bold" />
+        </Button>
+      )}
+    </form>
+  );
+}
+
+export function Nav(props: { name: string }) {
+  return (
+    <Navbar isBordered>
+      <NavbarBrand></NavbarBrand>
+      <NavbarContent justify="center">
+        <NavbarItem className="flex justify-center items-center">
+          <h1 className="font-bold">{props.name}</h1>
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarContent justify="end"></NavbarContent>
+    </Navbar>
+  );
+}
+
+export function MsgList(props: {
+  user?: User;
+  assistant?: WithId<Assistant>;
+  msgs?: AiMessage[];
+}) {
+  if (props.msgs) {
+    return (
+      <>
+        {[...props.msgs].reverse().map((message) => {
           switch (message.role) {
             case "assistant":
               return (
                 <MsgAssistant
-                  id={assistant!._id.toString()}
+                  id={props.assistant?._id.toString()}
                   key={message.id}
                   msg={message.content}
-                  avatar={assistant!.avatar}
+                  avatar={props.assistant?.avatar}
                 />
               );
             case "user":
               return (
                 <MsgUser
                   key={message.id}
-                  avatar={user.avatar}
+                  avatar={props.user?.avatar}
                   msg={message.content}
                 />
               );
@@ -147,43 +218,9 @@ export default function Page({ params }: { params: { id: string } }) {
               break;
           }
         })}
-      </div>
-      {assistant ? (
-        <form
-          id="chatArea"
-          onSubmit={handleSubmit}
-          className="container m-auto w-full flex items-center justify-between gap-3 p-1"
-        >
-          <Textarea
-            placeholder="Send a message"
-            minRows={1}
-            maxRows={3}
-            value={input}
-            onChange={handleInputChange}
-          />
-
-          {isLoading ? (
-            <Button
-              type="button"
-              radius="full"
-              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-              onClick={stop}
-            >
-              <Stop size={32} weight="bold" />
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              radius="full"
-              className="bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-            >
-              <PaperPlaneTilt size={32} weight="bold" />
-            </Button>
-          )}
-        </form>
-      ) : (
-        <Loading />
-      )}
-    </div>
-  );
+      </>
+    );
+  } else {
+    return <Loading />;
+  }
 }

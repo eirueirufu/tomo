@@ -2,7 +2,7 @@ import { Avatar, Card, CardBody } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 
 export default function MsgAssistant(props: {
-  id: string;
+  id?: string;
   avatar?: string;
   msg: string;
 }) {
