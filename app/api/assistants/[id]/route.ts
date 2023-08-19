@@ -1,8 +1,8 @@
-import clientPromise from "@/lib/mongodb";
-import { Assistant } from "@/models/assistant";
-import { NextRequest, NextResponse } from "next/server";
-import { WithId, ObjectId } from "mongodb";
-import { Message } from "@/models/message";
+import clientPromise from '@/lib/mongodb';
+import { Assistant } from '@/models/assistant';
+import { NextRequest, NextResponse } from 'next/server';
+import { WithId, ObjectId } from 'mongodb';
+import { Message } from '@/models/message';
 
 export async function GET(
   request: NextRequest,
@@ -10,33 +10,37 @@ export async function GET(
 ) {
   const client = await clientPromise;
   const collection = client
-    .db("gpt")
-    .collection<WithId<Assistant>>("assistants");
+    .db('gpt')
+    .collection<WithId<Assistant>>('assistants');
   const assistant = await collection.findOne({ _id: new ObjectId(params.id) });
   return NextResponse.json(assistant);
 }
 
-export async function PUT(
+export async function POST(
   request: NextRequest,
   { params }: { params: { id: string } },
 ) {
   const client = await clientPromise;
-  const collection = client.db("gpt").collection<Assistant>("assistants");
+  const collection = client.db('gpt').collection<Assistant>('assistants');
   const assistant: Assistant = await request.json();
-  await collection.updateOne(
-    { _id: new ObjectId(params.id) },
-    {
-      $set: {
-        name: assistant.name,
-        description: assistant.description,
-        avatar: assistant.avatar,
-        system: assistant.system,
-        msgNum: assistant.msgNum,
-        preMsgs: assistant.preMsgs,
+  if (params.id) {
+    await collection.updateOne(
+      { _id: new ObjectId(params.id) },
+      {
+        $set: {
+          name: assistant.name,
+          description: assistant.description,
+          avatar: assistant.avatar,
+          system: assistant.system,
+          msgNum: assistant.msgNum,
+          preMsgs: assistant.preMsgs,
+        },
       },
-    },
-  );
-  return new NextResponse(null, { status: 204 });
+    );
+  } else {
+    await collection.insertOne(assistant);
+  }
+  return NextResponse.json(assistant);
 }
 
 export async function DELETE(
@@ -44,12 +48,12 @@ export async function DELETE(
   { params }: { params: { id: string } },
 ) {
   const client = await clientPromise;
-  const db = client.db("gpt");
+  const db = client.db('gpt');
   await db
-    .collection<WithId<Assistant>>("assistants")
+    .collection<WithId<Assistant>>('assistants')
     .deleteOne({ _id: new ObjectId(params.id) });
   await db
-    .collection<Message>("messages")
+    .collection<Message>('messages')
     .deleteMany({ assistantId: new ObjectId(params.id) });
   return new NextResponse(null, { status: 204 });
 }

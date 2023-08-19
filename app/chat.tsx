@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Card, Avatar } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import { Card, Avatar } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 
 export default function Chat(props: {
   id: string;
@@ -25,7 +25,7 @@ export default function Chat(props: {
           src={props.avatar}
           onClick={(e) => {
             e.stopPropagation();
-            router.push(`/assistants/update/${props.id}`);
+            router.push(`/assistants/${props.id}`);
           }}
         />
         <div className="text-start ml-2">

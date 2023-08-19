@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Button,
@@ -6,9 +6,9 @@ import {
   NavbarContent,
   NavbarItem,
   NavbarBrand,
-} from "@nextui-org/react";
-import { useRouter } from "next/navigation";
-import { ThemeSwitcher } from "@/components/themeSwitch";
+} from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
+import { ThemeSwitcher } from '@/components/themeSwitch';
 
 export default function Nav() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function Nav() {
             color="default"
             variant="flat"
             onClick={() => {
-              router.push(`/assistants/insert`);
+              router.push(`/assistants/`);
             }}
           >
             ADD

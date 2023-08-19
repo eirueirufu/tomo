@@ -1,5 +1,5 @@
-import { Avatar, Card, CardBody } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
+import { Avatar, Card, CardBody } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 
 export default function MsgAssistant(props: {
   id?: string;
@@ -12,7 +12,7 @@ export default function MsgAssistant(props: {
       <Avatar
         src={props.avatar}
         onClick={() => {
-          router.push(`/assistants/update/${props.id}`);
+          router.push(`/assistants/${props.id}`);
         }}
       />
       <Card className="max-w-[70%] ml-2">
