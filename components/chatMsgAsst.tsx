@@ -16,7 +16,7 @@ export default function MsgAssistant(props: {
         }}
       />
       <Card className="max-w-[70%] ml-2">
-        <CardBody>
+        <CardBody className="p-3">
           <p>{props.msg}</p>
         </CardBody>
       </Card>

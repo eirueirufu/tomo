@@ -13,7 +13,7 @@ export default function MsgUser(props: { avatar: string; msg: string }) {
         }}
       />
       <Card className="max-w-[70%] mr-2">
-        <CardBody>
+        <CardBody className="p-3">
           <p>{props.msg}</p>
         </CardBody>
       </Card>
