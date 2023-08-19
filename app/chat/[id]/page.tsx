@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import { User } from "@/models/user";
 import clientPromise from "@/lib/mongodb";
 import Chat from "./chat";
-import { Message } from "ai";
+import { Message as AiMessage } from "ai";
+import { Message } from "@/models/message";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const db = (await clientPromise).db("gpt");
@@ -18,7 +19,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     avatar: "/user.svg",
   };
 
-  const messages: Message[] = [];
+  const messages: AiMessage[] = [];
   if (assistant.system) {
     messages.push({
       id: uuidv4(),
@@ -36,18 +37,21 @@ export default async function Page({ params }: { params: { id: string } }) {
       content: item.content,
     });
   });
+
   if (assistant.msgNum > 0) {
-    const msgs = (
-      await db
-        .collection<Message>("messages")
-        .find({ assistantId: new ObjectId(params.id) })
-        .sort({ createdAt: -1 })
-        .limit(assistant.msgNum)
-        .toArray()
-    ).reverse();
-    if (msgs.length > 0) {
-      messages.push(...msgs);
-    }
+    const msgs = await db
+      .collection<Message>("messages")
+      .find({ assistantId: new ObjectId(params.id) })
+      .sort({ createdAt: -1 })
+      .limit(assistant.msgNum)
+      .toArray();
+    msgs.reverse().forEach((item) => {
+      messages.push({
+        id: item.id,
+        role: item.role,
+        content: item.content,
+      });
+    });
   }
 
   return (
@@ -57,7 +61,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         name: assistant.name,
         avatar: assistant.avatar,
       }}
-      user={user}
+      user={{ avatar: user.avatar }}
       initMessages={messages}
     />
   );
