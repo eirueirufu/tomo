@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { WithId, ObjectId } from 'mongodb';
 import { Message } from '@/lib/api/assistant';
 
-export async function POST(
+export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: { id?: string } },
 ) {
   const client = await clientPromise;
   const collection = client.db('gpt').collection<Assistant>('assistants');

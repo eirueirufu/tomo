@@ -204,13 +204,18 @@ export default function AssistantSetting(props: {
             color="success"
             variant="flat"
             onClick={async () => {
-              if (!assistant) {
-                return;
+              if (props.id) {
+                await fetch(`/api/assistants/${props.id}`, {
+                  method: 'PUT',
+                  body: JSON.stringify(assistant),
+                });
+              } else {
+                await fetch(`/api/assistants`, {
+                  method: 'POST',
+                  body: JSON.stringify(assistant),
+                });
               }
-              await fetch(`/api/assistants/${props.id}`, {
-                method: 'POST',
-                body: JSON.stringify(assistant),
-              });
+
               router.back();
             }}
           >
@@ -221,9 +226,6 @@ export default function AssistantSetting(props: {
               color="danger"
               variant="flat"
               onClick={async () => {
-                if (!assistant) {
-                  return;
-                }
                 await fetch(`/api/assistants/${props.id}`, {
                   method: 'DELETE',
                 });
