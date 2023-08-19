@@ -1,32 +1,36 @@
+"use client";
+
 import { Card, Avatar } from "@nextui-org/react";
-
 import { useRouter } from "next/navigation";
-import { Assistant } from "@/models/assistant";
-import { WithId } from "mongodb";
 
-export default function Chat(props: { assistant: WithId<Assistant> }) {
+export default function Chat(props: {
+  id: string;
+  avatar: string;
+  name: string;
+  desc: string;
+}) {
   const router = useRouter();
   return (
     <Card
-      key={props.assistant._id.toString()}
+      key={props.id}
       isHoverable
       isPressable
       className="w-full p-3 overflow-visible"
       onClick={() => {
-        router.push(`/chat/${props.assistant._id.toString()}`);
+        router.push(`/chat/${props.id}`);
       }}
     >
       <div className="flex flex-row">
         <Avatar
-          src={props.assistant.avatar}
+          src={props.avatar}
           onClick={(e) => {
             e.stopPropagation();
-            router.push(`/assistants/update/${props.assistant._id.toString()}`);
+            router.push(`/assistants/update/${props.id}`);
           }}
         />
         <div className="text-start ml-2">
-          <p className="text-sm">{props.assistant.name}</p>
-          <p className="text-xs text-zinc-500">{props.assistant.description}</p>
+          <p className="text-sm">{props.name}</p>
+          <p className="text-xs text-zinc-500">{props.desc}</p>
         </div>
       </div>
     </Card>

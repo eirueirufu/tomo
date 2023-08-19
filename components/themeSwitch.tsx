@@ -1,3 +1,5 @@
+"use client";
+
 import { SunDim, Moon } from "@phosphor-icons/react";
 import { useTheme } from "next-themes";
 
