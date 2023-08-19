@@ -26,6 +26,14 @@ export async function getAssistant(id?: string) {
   });
 }
 
+export async function getAssistants() {
+  const client = await clientPromise;
+  const collection = client.db('gpt').collection<Assistant>('assistants');
+  const cursor = collection.find();
+  const assistants = await cursor.toArray();
+  return assistants;
+}
+
 export async function getChatMessages(assistantId: string, limit?: number) {
   if (!limit) {
     return [];

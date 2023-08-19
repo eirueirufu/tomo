@@ -1,18 +1,8 @@
-import { cookies } from 'next/headers';
-import { Suspense } from 'react';
-import Loading from '@/components/loading';
-import HomeAssistants from '@/components/homeAssistants';
-import HomeNav from '@/components/homeNav';
+import Home from '@/components/home';
+import { getAssistants } from '@/lib/api/assistant';
 
 export default async function Page() {
-  cookies();
+  const assistants = await getAssistants();
 
-  return (
-    <div className="h-screen m-auto flex flex-col">
-      <HomeNav />
-      <Suspense fallback={<Loading />}>
-        <HomeAssistants />
-      </Suspense>
-    </div>
-  );
+  return <Home assistants={assistants} />;
 }
