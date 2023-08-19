@@ -23,7 +23,7 @@ export default function Chat(props: {
   const [messages, setMessages] = useState<Message[]>([]);
 
   return (
-    <View>
+    <View className="flex flex-col">
       <Navbar isBordered>
         <NavbarBrand></NavbarBrand>
         <NavbarContent justify="center">
@@ -39,12 +39,12 @@ export default function Chat(props: {
           assistant={props.assistant}
           msgs={messages}
         />
-        <InputArea
-          assistant={props.assistant}
-          initMessages={props.initMessages}
-          setMessage={setMessages}
-        />
       </div>
+      <InputArea
+        assistant={props.assistant}
+        initMessages={props.initMessages}
+        setMessage={setMessages}
+      />
     </View>
   );
 }
