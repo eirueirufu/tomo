@@ -39,12 +39,12 @@ export default function Chat(props: {
           assistant={props.assistant}
           msgs={messages}
         />
+        <InputArea
+          assistant={props.assistant}
+          initMessages={props.initMessages}
+          setMessage={setMessages}
+        />
       </div>
-      <InputArea
-        assistant={props.assistant}
-        initMessages={props.initMessages}
-        setMessage={setMessages}
-      />
     </View>
   );
 }
