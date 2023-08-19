@@ -2,8 +2,10 @@ import { Assistant } from "@/models/assistant";
 import clientPromise from "@/lib/mongodb";
 import Chat from "./chat";
 import Nav from "./nav";
+import { cookies } from "next/headers";
 
 export default async function Page() {
+  cookies();
   const client = await clientPromise;
   const collection = client.db("gpt").collection<Assistant>("assistants");
   const cursor = collection.find();
