@@ -1,29 +1,29 @@
-import { Assistant } from "@/models/assistant";
-import { WithId } from "mongodb";
-import { User } from "@/models/user";
-import MsgAssistant from "./assistantMsg";
-import MsgUser from "./userMsg";
-import { Message } from "ai/react";
+import { Assistant } from '@/models/assistant';
+import { WithId } from 'mongodb';
+import { User } from '@/models/user';
+import MsgAssistant from './chatMsgAsst';
+import MsgUser from './chatMsgUser';
+import { Message } from 'ai/react';
 
 export default function MsgList(props: {
   user: User;
-  assistant: { _id: string; avatar: string };
+  assistant: WithId<Assistant>;
   msgs: Message[];
 }) {
   return (
     <>
       {[...props.msgs].reverse().map((message) => {
         switch (message.role) {
-          case "assistant":
+          case 'assistant':
             return (
               <MsgAssistant
-                id={props.assistant._id}
+                id={props.assistant._id.toString()}
                 key={message.id}
                 msg={message.content}
                 avatar={props.assistant.avatar}
               />
             );
-          case "user":
+          case 'user':
             return (
               <MsgUser
                 key={message.id}

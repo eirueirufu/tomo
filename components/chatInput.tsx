@@ -1,13 +1,13 @@
-import { Assistant } from "@/models/assistant";
-import { Textarea, Button } from "@nextui-org/react";
-import { Stop, PaperPlaneTilt } from "@phosphor-icons/react";
-import { Message } from "ai";
-import { useChat } from "ai/react";
-import { WithId } from "mongodb";
-import { useEffect } from "react";
+import { Assistant } from '@/models/assistant';
+import { Textarea, Button } from '@nextui-org/react';
+import { Stop, PaperPlaneTilt } from '@phosphor-icons/react';
+import { Message } from 'ai';
+import { useChat } from 'ai/react';
+import { WithId } from 'mongodb';
+import { useEffect } from 'react';
 
 export default function InputArea(props: {
-  assistant: { _id: string };
+  assistant: WithId<Assistant>;
   initMessages: Message[];
   setMessage: (msgs: Message[]) => void;
 }) {
@@ -15,7 +15,7 @@ export default function InputArea(props: {
     useChat({
       onFinish(message) {
         fetch(`/api/assistants/${props.assistant._id.toString()}/messages`, {
-          method: "POST",
+          method: 'POST',
           body: JSON.stringify({
             ...message,
             assistantId: props.assistant._id,
@@ -29,12 +29,12 @@ export default function InputArea(props: {
     if (
       messages.length < 1 ||
       !isLoading ||
-      messages[messages.length - 1].role !== "user"
+      messages[messages.length - 1].role !== 'user'
     ) {
       return;
     }
     fetch(`/api/assistants/${props.assistant._id.toString()}/messages`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         ...messages[messages.length - 1],
         assistantId: props.assistant._id,
