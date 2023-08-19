@@ -1,4 +1,4 @@
-import { Assistant } from '@/models/assistant';
+import { Assistant } from '@/lib/api/assistant';
 import { Textarea, Button } from '@nextui-org/react';
 import { Stop, PaperPlaneTilt } from '@phosphor-icons/react';
 import { Message } from 'ai';

@@ -1,6 +1,6 @@
 'use client';
 
-import { User } from '@/models/user';
+import { User } from '@/lib/api/user';
 import { View } from './view';
 import {
   Card,

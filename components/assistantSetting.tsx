@@ -1,6 +1,6 @@
 'use client';
 
-import { Assistant } from '@/models/assistant';
+import { Assistant } from '@/lib/api/assistant';
 import {
   Card,
   CardBody,

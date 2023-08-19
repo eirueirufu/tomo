@@ -1,7 +1,22 @@
-import { Assistant } from '@/models/assistant';
 import { WithId, ObjectId } from 'mongodb';
 import clientPromise from '../mongodb';
-import { Message } from '@/models/message';
+import { Message as aiMessage } from 'ai/react';
+
+export interface Assistant {
+  name: string;
+  description: string;
+  avatar: string;
+  system: string;
+  msgNum: number;
+  preMsgs: {
+    role: 'user' | 'assistant';
+    content: string;
+  }[];
+}
+
+export interface Message extends aiMessage {
+  assistantId: ObjectId;
+}
 
 export async function getAssistant(id?: string) {
   const client = await clientPromise;

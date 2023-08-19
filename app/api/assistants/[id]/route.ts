@@ -1,8 +1,8 @@
 import clientPromise from '@/lib/mongodb';
-import { Assistant } from '@/models/assistant';
+import { Assistant } from '@/lib/api/assistant';
 import { NextRequest, NextResponse } from 'next/server';
 import { WithId, ObjectId } from 'mongodb';
-import { Message } from '@/models/message';
+import { Message } from '@/lib/api/assistant';
 
 export async function POST(
   request: NextRequest,

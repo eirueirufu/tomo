@@ -1,10 +1,10 @@
-import { Assistant } from "@/models/assistant";
-import clientPromise from "@/lib/mongodb";
-import Chat from "./chat";
+import { Assistant } from '@/lib/api/assistant';
+import clientPromise from '@/lib/mongodb';
+import Chat from './homeAssistant';
 
-export default async function ChatList() {
+export default async function HomeAssistants() {
   const client = await clientPromise;
-  const collection = client.db("gpt").collection<Assistant>("assistants");
+  const collection = client.db('gpt').collection<Assistant>('assistants');
   const cursor = collection.find();
   const assistants = await cursor.toArray();
 

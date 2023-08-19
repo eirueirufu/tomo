@@ -3,7 +3,7 @@
 import { Card, Avatar } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 
-export default function Chat(props: {
+export default function HomeAssistant(props: {
   id: string;
   avatar: string;
   name: string;

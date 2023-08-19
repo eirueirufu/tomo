@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import InputArea from './chatInput';
 import MsgList from './chatMsgList';
 import { Message } from 'ai';
-import { Assistant } from '@/models/assistant';
-import { User } from '@/models/user';
+import { Assistant } from '@/lib/api/assistant';
+import { User } from '@/lib/api/user';
 import { WithId } from 'mongodb';
 import { View } from './view';
 import {

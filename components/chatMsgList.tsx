@@ -1,6 +1,6 @@
-import { Assistant } from '@/models/assistant';
+import { Assistant } from '@/lib/api/assistant';
 import { WithId } from 'mongodb';
-import { User } from '@/models/user';
+import { User } from '@/lib/api/user';
 import MsgAssistant from './chatMsgAsst';
 import MsgUser from './chatMsgUser';
 import { Message } from 'ai/react';

@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { ThemeSwitcher } from '@/components/themeSwitch';
 
-export default function Nav() {
+export default function HomeNav() {
   const router = useRouter();
   return (
     <Navbar isBordered>

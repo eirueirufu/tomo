@@ -1,5 +1,8 @@
-import { User } from '@/models/user';
 import clientPromise from '../mongodb';
+
+export interface User {
+  avatar: string;
+}
 
 export async function getUser() {
   const client = await clientPromise;
