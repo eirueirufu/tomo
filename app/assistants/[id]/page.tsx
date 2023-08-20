@@ -1,6 +1,7 @@
 import AssistantSetting from '@/components/assistantSetting';
 import { getAssistant } from '@/lib/api/assistant';
 import { Assistant } from '@/lib/api/assistant';
+import { getUser } from '@/lib/api/user';
 
 export default async function Page({ params }: { params: { id: string } }) {
   let assistant: Assistant | null = await getAssistant(params.id);
@@ -14,6 +15,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       preMsgs: [],
     };
   }
+  const user = await getUser();
 
-  return <AssistantSetting id={params.id} assistant={assistant} />;
+  return <AssistantSetting id={params.id} assistant={assistant} user={user} />;
 }

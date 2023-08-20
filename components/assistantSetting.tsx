@@ -20,10 +20,12 @@ import { useRouter } from 'next/navigation';
 import router from 'next/router';
 import { useState } from 'react';
 import { View } from './view';
+import { User } from '@/lib/api/user';
 
 export default function AssistantSetting(props: {
   id?: string;
   assistant: Assistant;
+  user: User;
 }) {
   const assistant = props.assistant;
   const router = useRouter();
@@ -144,7 +146,7 @@ export default function AssistantSetting(props: {
                         className="w-full flex flex-row-reverse flex-nowrap p-2"
                       >
                         <Avatar
-                          src={'/user.svg'}
+                          src={props.user.avatar}
                           onClick={() => {
                             const msgs = preMsgs
                               .slice(0, index)
