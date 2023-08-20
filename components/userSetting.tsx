@@ -11,11 +11,12 @@ import {
   Button,
   Input,
 } from '@nextui-org/react';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function UserSetting(props: { user: User }) {
   const user = props.user;
+  const router = useRouter();
   const [avatar, setAvatar] = useState(user.avatar);
 
   return (
@@ -70,6 +71,7 @@ export default function UserSetting(props: { user: User }) {
                 body: JSON.stringify(user),
               });
               router.back();
+              router.refresh();
             }}
           >
             SAVE

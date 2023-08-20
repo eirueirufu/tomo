@@ -217,6 +217,7 @@ export default function AssistantSetting(props: {
               }
 
               router.back();
+              router.refresh();
             }}
           >
             SAVE
@@ -230,6 +231,7 @@ export default function AssistantSetting(props: {
                   method: 'DELETE',
                 });
                 router.push(`/`);
+                router.refresh();
               }}
             >
               DELETE

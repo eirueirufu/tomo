@@ -28,7 +28,7 @@ export default function HomeNav() {
             color="default"
             variant="flat"
             onClick={() => {
-              router.push(`/assistants/`);
+              router.push(`/assistants`);
             }}
           >
             ADD
