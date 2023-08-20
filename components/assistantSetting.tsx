@@ -101,7 +101,7 @@ export default function AssistantSetting(props: {
           />
           <Divider />
           <Textarea
-            placeholder="Send a message"
+            placeholder="Setting"
             minRows={10}
             maxRows={99}
             defaultValue={assistant.system}
