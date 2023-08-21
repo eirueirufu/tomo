@@ -1,10 +1,12 @@
-import Home from '@/components/home';
-import { getAssistants } from '@/lib/api/assistant';
-import { cookies } from 'next/headers';
+import HomeAssistants from '@/components/homeAssistants';
+import HomeNav from '@/components/homeNav';
+import { View } from '@/components/view';
 
 export default async function Page() {
-  cookies();
-  const assistants = await getAssistants();
-
-  return <Home assistants={assistants} />;
+  return (
+    <View className="flex flex-col">
+      <HomeNav />
+      <HomeAssistants />
+    </View>
+  );
 }
